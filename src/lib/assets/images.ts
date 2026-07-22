@@ -46,7 +46,7 @@ export const images = {
   services: {
     procurement: unsplash("photo-1504307651254-35680f356dfd", 800),
     maintenance: unsplash("photo-1581092918056-0c4c3acd3789", 800),
-    installation: unsplash("photo-1504328345606-2c4c243709a0", 800),
+    installation: `/Images/services 4.jpg`,
   },
 
   about: {
