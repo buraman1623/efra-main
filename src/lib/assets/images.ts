@@ -20,7 +20,7 @@ export const images = {
     mining: `/Images/home 5.jpg`,
     agriculture: `/Images/home 6.jpg`,
     industrial: `/Images/home 7.jpg`,
-    goldWashing: unsplash("photo-1518544801976-5e8879a05c44", 800),
+    goldWashing: `/Images/product 2.png`,
     crushers: unsplash("photo-1581094794329-c8112a89af12", 800),
     ballMills: unsplash("photo-1581091226033-d5c48150dbaa", 800),
     tractors: `/Images/home 3.png`,
