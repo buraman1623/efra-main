@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: #F5F2EF;
+    --color-bg-elevated: #FFFFFF;
+    --color-text: #000000;
+    --color-text-muted: #6B6560;
+    --color-border: #E8E4E0;
+    --color-accent: #E05B2B;
+    --color-accent-hover: #9B3311;
+    --motion-duration-fast: 200ms;
+    --motion-duration-normal: 300ms;
+    --motion-duration-slow: 500ms;
+    --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .dark {
+    --color-bg: #000000;
+    --color-bg-elevated: #0D0D0D;
+    --color-text: #F5F2EF;
+    --color-text-muted: #A8A29E;
+    --color-border: #4E4742;
+    --color-accent: #FA834E;
+    --color-accent-hover: #E05B2B;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply text-[var(--color-text)] font-body text-body-md;
+    background-color: #000000;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  ::selection {
+    @apply bg-brand-secondary/30 text-brand-primary;
+  }
+
+  .dark ::selection {
+    @apply bg-brand-accent/30 text-brand-light;
+  }
+}
+
+@layer components {
+  .container-brand {
+    @apply mx-auto w-full max-w-wide px-gutter lg:px-gutter-lg;
+  }
+
+  .section-brand {
+    @apply py-section-y lg:py-section-y-lg;
+  }
+
+  .text-gradient-accent {
+    @apply bg-gradient-accent bg-clip-text text-transparent;
+  }
+
+  .card-brand {
+    @apply rounded-brand-lg border border-brand-border/40 bg-brand-surface/50 backdrop-blur-sm;
+  }
+
+  .glass-panel {
+    @apply rounded-brand-lg border border-glass-border bg-glass-fill backdrop-blur-xl;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-bg)];
+  }
+}
+
+@layer utilities {
+  .motion-safe {
+    @media (prefers-reduced-motion: no-preference) {
+      transition-timing-function: var(--motion-ease);
+    }
+  }
+
+  .animate-stagger > * {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: fade-up 0.6s ease-brand-in forwards;
+      opacity: 0;
+    }
+  }
+
+  .animate-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .animate-stagger > *:nth-child(2) { animation-delay: 80ms; }
+  .animate-stagger > *:nth-child(3) { animation-delay: 160ms; }
+  .animate-stagger > *:nth-child(4) { animation-delay: 240ms; }
+  .animate-stagger > *:nth-child(5) { animation-delay: 320ms; }
+  .animate-stagger > *:nth-child(6) { animation-delay: 400ms; }
+}
