@@ -28,7 +28,7 @@ export const images = {
   },
 
   products: {
-    "gwm-01": unsplash("photo-1518544801976-5e8879a05c44", 800),
+    "gwm-01": `/Images/product 2.png`,
     "gwm-02": unsplash("photo-1578328819058-b69f3a3b0f6b", 800),
     "gcm-01": unsplash("photo-1581094794329-c8112a89af12", 800),
     "gcm-02": unsplash("photo-1581092160562-40aa08e78837", 800),
