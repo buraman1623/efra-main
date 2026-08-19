@@ -26,7 +26,7 @@ export async function GET(request: Request) {
       // specific page (e.g. "Sign in to view your watchlist"), in which
       // case we honor that original destination for both roles.
       const destination =
-        explicitNext ?? ((profile as any)?.role === "admin" ? "/admin" : "/");
+        explicitNext ?? (profile?.role === "admin" ? "/admin" : "/");
 
       return NextResponse.redirect(`${origin}${destination}`);
     }
