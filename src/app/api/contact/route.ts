@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from "@/lib/supabase/client";
 import { contactFormSchema } from "@/lib/validation/schemas";
 import { notifyNewContactMessage } from "@/lib/telegram/notify";
 
