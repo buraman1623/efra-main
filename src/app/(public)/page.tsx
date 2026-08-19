@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
@@ -5,9 +7,12 @@ import { FadeUp, StaggerContainer, StaggerItem, SlideInRight } from "@/component
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { images } from "@/lib/assets/images";
-import { company, services, uspPoints } from "@/lib/content/company";
+import { company, services } from "@/lib/content/company";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export default function HomePage() {
+  const { t } = useLocale();
+
   return (
     <div className="relative bg-black">
       {/* Single global ambient background — fixed behind all content, no per-section resets */}
@@ -26,7 +31,6 @@ export default function HomePage() {
         {/* background photography — visible but soft, darker toward the bottom for depth and separation before the next section */}
         <div className="absolute inset-0 z-0">
           <Image
-            // src={images.hero.home}
             src={images.hero.home}
             alt="Heavy industrial machinery"
             fill
@@ -48,7 +52,7 @@ export default function HomePage() {
 
           <FadeUp delay={0.2}>
             <h1 className="text-display-md md:text-display-xl text-brand-light font-heading mb-6 max-w-4xl leading-[1.05] tracking-tight">
-              Powering <span className="bg-gradient-signal bg-clip-text text-transparent">Ethiopia&apos;s</span> Core Industries
+              {t.home.heroTitlePrefix} <span className="bg-gradient-signal bg-clip-text text-transparent">{t.home.heroTitleMid}</span> {t.home.heroTitleSuffix}
             </h1>
           </FadeUp>
 
@@ -60,10 +64,10 @@ export default function HomePage() {
 
           <FadeUp delay={0.4} className="flex flex-col sm:flex-row gap-4 mb-16">
             <Button asChild size="lg" variant="primary" className="w-full sm:w-auto rounded-full">
-              <Link href="/products">Explore Machinery</Link>
+              <Link href="/products">{t.home.exploreMachinery}</Link>
             </Button>
             <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto rounded-full glass-panel">
-              <Link href="/contact?tab=quote">Request a Quote</Link>
+              <Link href="/contact?tab=quote">{t.home.requestQuote}</Link>
             </Button>
           </FadeUp>
 
@@ -71,15 +75,15 @@ export default function HomePage() {
             <div className="glass-panel rounded-full flex divide-x divide-glass-border overflow-hidden">
               <div className="flex-1 py-5 px-4">
                 <div className="text-heading-md font-heading bg-gradient-signal bg-clip-text text-transparent">10+</div>
-                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">Years Exp.</div>
+                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">{t.home.statYearsExp}</div>
               </div>
               <div className="flex-1 py-5 px-4">
                 <div className="text-heading-md font-heading bg-gradient-signal bg-clip-text text-transparent">13+</div>
-                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">Machine Models</div>
+                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">{t.home.statMachineModels}</div>
               </div>
               <div className="flex-1 py-5 px-4">
                 <div className="text-heading-md font-heading bg-gradient-signal bg-clip-text text-transparent">100%</div>
-                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">Nationwide</div>
+                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">{t.home.statNationwide}</div>
               </div>
             </div>
           </FadeUp>
@@ -90,8 +94,8 @@ export default function HomePage() {
       <section className="section-brand">
         <div className="container-brand">
           <FadeUp className="flex items-end justify-between flex-wrap gap-4 mb-10">
-            <h2 className="text-heading-lg font-heading text-brand-light">Built on Real Operations</h2>
-            <p className="text-body-sm text-brand-muted max-w-xs">From the field to the factory floor — equipment doing the actual work.</p>
+            <h2 className="text-heading-lg font-heading text-brand-light">{t.home.provenTitle}</h2>
+            <p className="text-body-sm text-brand-muted max-w-xs">{t.home.provenSubtitle}</p>
           </FadeUp>
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-5 md:h-[480px]">
@@ -99,8 +103,8 @@ export default function HomePage() {
               <Image src={images.about.factory} alt="Processing and fabrication facility" fill className="object-cover transition-transform duration-slower group-hover:scale-105" />
               <div className="absolute inset-0 bg-gradient-to-t from-brand-primary via-brand-primary/30 to-transparent" />
               <div className="absolute bottom-4 left-4 right-4 glass-panel py-3 px-4">
-                <span className="text-label text-brand-amber uppercase tracking-widest block mb-0.5">Facility</span>
-                <strong className="text-body-md font-heading text-brand-light">Processing &amp; Fabrication</strong>
+                <span className="text-label text-brand-amber uppercase tracking-widest block mb-0.5">{t.home.facilityTag}</span>
+                <strong className="text-body-md font-heading text-brand-light">{t.home.processingFabrication}</strong>
               </div>
             </StaggerItem>
 
@@ -109,16 +113,16 @@ export default function HomePage() {
                 <Image src={images.categories.tractors} alt="Agricultural machinery in the field" fill className="object-cover transition-transform duration-slower group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-primary via-brand-primary/30 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 glass-panel py-3 px-4">
-                  <span className="text-label text-brand-amber uppercase tracking-widest block mb-0.5">Field</span>
-                  <strong className="text-body-md font-heading text-brand-light">Agricultural Deployment</strong>
+                  <span className="text-label text-brand-amber uppercase tracking-widest block mb-0.5">{t.home.fieldTag}</span>
+                  <strong className="text-body-md font-heading text-brand-light">{t.home.agriculturalDeployment}</strong>
                 </div>
               </StaggerItem>
               <StaggerItem className="relative rounded-brand-lg overflow-hidden aspect-[16/9] md:aspect-auto group">
                 <Image src={images.categories.ballMills} alt="Mineral processing plant" fill className="object-cover transition-transform duration-slower group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-primary via-brand-primary/30 to-transparent" />
                 <div className="absolute bottom-4 left-4 right-4 glass-panel py-3 px-4">
-                  <span className="text-label text-brand-amber uppercase tracking-widest block mb-0.5">Plant</span>
-                  <strong className="text-body-md font-heading text-brand-light">Mineral Processing</strong>
+                  <span className="text-label text-brand-amber uppercase tracking-widest block mb-0.5">{t.home.plantTag}</span>
+                  <strong className="text-body-md font-heading text-brand-light">{t.home.mineralProcessing}</strong>
                 </div>
               </StaggerItem>
             </div>
@@ -131,18 +135,18 @@ export default function HomePage() {
         <div className="container-brand relative z-10">
           <FadeUp>
             <div className="text-center mb-16">
-              <h2 className="text-heading-lg font-heading text-brand-light mb-4">Industrial Solutions</h2>
+              <h2 className="text-heading-lg font-heading text-brand-light mb-4">{t.home.solutionsTitle}</h2>
               <p className="text-body-lg text-brand-muted max-w-2xl mx-auto">
-                Comprehensive heavy machinery engineered for peak performance in mining, agriculture, and specialized industrial sectors.
+                {t.home.solutionsSubtitle}
               </p>
             </div>
           </FadeUp>
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { title: "Mining Equipment", image: images.categories.mining, slug: "mining-mineral-processing", index: 1, tag: "Mining" },
-              { title: "Agricultural Machinery", image: images.categories.agriculture, slug: "agricultural-machinery", index: 2, tag: "Agriculture" },
-              { title: "Industrial Machinery", image: images.categories.industrial, slug: "industrial-machinery", index: 3, tag: "Industrial" }
+              { title: t.home.categoryMiningTitle, image: images.categories.mining, slug: "mining-mineral-processing", index: 1, tag: t.home.categoryMining },
+              { title: t.home.categoryAgricultureTitle, image: images.categories.agriculture, slug: "agricultural-machinery", index: 2, tag: t.home.categoryAgriculture },
+              { title: t.home.categoryIndustrialTitle, image: images.categories.industrial, slug: "industrial-machinery", index: 3, tag: t.home.categoryIndustrial }
             ].map((cat) => (
               <StaggerItem key={cat.slug} className="group relative overflow-hidden rounded-brand-lg h-96 cursor-pointer hover:-translate-y-1.5 transition-transform duration-normal">
                 <Link href={`/products/${cat.slug}`} className="block w-full h-full">
@@ -159,7 +163,7 @@ export default function HomePage() {
                     </span>
                     <h3 className="text-heading-sm text-brand-light font-heading mb-2">{cat.title}</h3>
                     <div className="flex items-center gap-2 text-brand-light/80 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <span className="text-body-sm font-semibold">View Catalog</span>
+                      <span className="text-body-sm font-semibold">{t.common.viewCatalog}</span>
                       <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </div>
                   </div>
@@ -176,17 +180,17 @@ export default function HomePage() {
         <div className="container-brand relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <SlideInRight className="flex flex-col gap-6">
-              <h2 className="text-heading-lg font-heading text-white">Why Partner With Us?</h2>
+              <h2 className="text-heading-lg font-heading text-white">{t.home.whyPartner}</h2>
               <p className="text-body-lg text-brand-muted">
                 {company.vision}
               </p>
               <Button asChild variant="outline" className="w-fit mt-4 rounded-full">
-                <Link href="/about">Learn Our Story</Link>
+                <Link href="/about">{t.home.learnOurStory}</Link>
               </Button>
             </SlideInRight>
             
             <StaggerContainer className="grid sm:grid-cols-2 gap-6">
-              {uspPoints.map((usp, i) => (
+              {t.uspPoints.map((usp, i) => (
                 <StaggerItem key={i} className="glass-panel rounded-brand-lg p-6 hover:border-brand-secondary/50 transition-colors">
                   <div className="w-12 h-12 bg-gradient-signal rounded-brand-md flex items-center justify-center mb-4">
                     <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -207,27 +211,30 @@ export default function HomePage() {
         <div className="container-brand relative z-10">
           <FadeUp>
             <div className="text-center mb-16">
-              <h2 className="text-heading-lg font-heading text-brand-light mb-4">Comprehensive Support</h2>
+              <h2 className="text-heading-lg font-heading text-brand-light mb-4">{t.home.supportTitle}</h2>
               <p className="text-body-lg text-brand-muted max-w-2xl mx-auto">
-                Beyond machinery sales, we provide end-to-end technical support to ensure your operations never stop.
+                {t.home.supportSubtitle}
               </p>
             </div>
           </FadeUp>
 
           <StaggerContainer className="grid md:grid-cols-3 gap-6">
-            {services.map((srv) => (
-              <StaggerItem key={srv.slug} className="glass-panel rounded-brand-lg p-8 hover:border-brand-secondary/40 transition-colors group">
-                <div className="w-14 h-14 bg-gradient-signal rounded-brand-md flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  <span className="text-2xl">⚙️</span>
-                </div>
-                <h3 className="text-heading-sm font-heading text-brand-light mb-3">{srv.name}</h3>
-                <p className="text-body-sm text-brand-muted mb-6">{srv.description}</p>
-                <Link href={`/services/${srv.slug}`} className="inline-flex items-center gap-2 text-brand-amber font-semibold hover:text-brand-secondary transition-colors">
-                  Learn more
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-                </Link>
-              </StaggerItem>
-            ))}
+            {services.map((srv) => {
+              const translated = t.services.items[srv.slug as keyof typeof t.services.items];
+              return (
+                <StaggerItem key={srv.slug} className="glass-panel rounded-brand-lg p-8 hover:border-brand-secondary/40 transition-colors group">
+                  <div className="w-14 h-14 bg-gradient-signal rounded-brand-md flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <span className="text-2xl">⚙️</span>
+                  </div>
+                  <h3 className="text-heading-sm font-heading text-brand-light mb-3">{translated?.name ?? srv.name}</h3>
+                  <p className="text-body-sm text-brand-muted mb-6">{translated?.description ?? srv.description}</p>
+                  <Link href={`/services/${srv.slug}`} className="inline-flex items-center gap-2 text-brand-amber font-semibold hover:text-brand-secondary transition-colors">
+                    {t.common.learnMore}
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  </Link>
+                </StaggerItem>
+              );
+            })}
           </StaggerContainer>
         </div>
       </section>
@@ -244,17 +251,17 @@ export default function HomePage() {
           <div className="container-brand relative z-10 text-center">
             <FadeUp className="max-w-3xl mx-auto flex flex-col items-center">
               <h2 className="text-heading-lg md:text-display-sm font-heading text-brand-light mb-4">
-                Ready to Upgrade Your Operations?
+                {t.home.ctaTitle}
               </h2>
               <p className="text-body-lg text-brand-muted mb-8 max-w-xl">
-                Get in touch with our engineering team for detailed specifications, custom solutions, and immediate quotes.
+                {t.home.ctaSubtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                 <Button asChild size="lg" variant="primary" className="w-full sm:w-auto rounded-full">
-                  <Link href="/products">Explore Machinery</Link>
+                  <Link href="/products">{t.home.exploreMachinery}</Link>
                 </Button>
                 <Button asChild size="lg" variant="secondary" className="w-full sm:w-auto rounded-full glass-panel">
-                  <Link href="/contact">Contact Support</Link>
+                  <Link href="/contact">{t.home.contactSupport}</Link>
                 </Button>
               </div>
             </FadeUp>

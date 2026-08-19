@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import type { BreadcrumbItem } from "@/types";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 interface BreadcrumbsProps {
   items: BreadcrumbItem[];
@@ -9,6 +12,7 @@ interface BreadcrumbsProps {
 }
 
 export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
+  const { t } = useLocale();
   return (
     <nav aria-label="Breadcrumb" className={cn("py-4", className)}>
       <ol className="flex flex-wrap items-center gap-2 text-xs font-medium text-brand-muted">
@@ -17,7 +21,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
             href="/"
             className="text-brand-muted transition-colors hover:text-brand-amber"
           >
-            Home
+            {t.breadcrumbs.home}
           </Link>
         </li>
         {items.map((item, index) => (

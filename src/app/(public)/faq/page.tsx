@@ -9,36 +9,14 @@ import { Button } from "@/components/ui/Button";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/ui/MotionWrapper";
 import { company } from "@/lib/content/company";
 import { images } from "@/lib/assets/images";
-
-const faqs = [
-  {
-    question: "Do you provide on-site installation for the machinery?",
-    answer: `Yes. ${company.name} provides comprehensive on-site installation and commissioning services across Ethiopia. Our certified engineering team will ensure your equipment is set up correctly and running at peak performance from day one.`
-  },
-  {
-    question: "What is your warranty policy?",
-    answer: "We offer extended warranties on all our industrial and agricultural machinery. The specific warranty period depends on the equipment model and category. Please contact our sales team for exact warranty details on specific machinery."
-  },
-  {
-    question: "Do you supply spare parts?",
-    answer: "Absolutely. A core part of our mission is reducing downtime for our clients. We maintain an extensive inventory of genuine spare parts at our Sheger City headquarters, ready for immediate dispatch nationwide."
-  },
-  {
-    question: "Can I request a customized machinery solution?",
-    answer: "Yes, we specialize in solution-driven engineering. If your operation has specific requirements, our engineering team can work with our manufacturing partners to source or assemble custom equipment tailored to your needs."
-  },
-  {
-    question: "How do I request a quote?",
-    answer: "You can request a quote by clicking the 'Request a Quote' button in the navigation menu, filling out the form on our Contact page, or directly calling our sales desk. Please provide as much detail as possible about your intended operations so we can offer the most accurate pricing."
-  }
-];
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const { t } = useLocale();
 
   return (
     <div className="relative min-h-screen bg-black text-brand-light font-sans selection:bg-brand-amber/30 selection:text-brand-light flex flex-col justify-between">
-      {/* 1. Global Ambient Background Glow */}
       <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -left-32 w-[560px] h-[560px] rounded-full bg-brand-secondary/25 blur-[120px] animate-drift" />
         <div className="absolute top-1/4 -right-40 w-[480px] h-[480px] rounded-full bg-brand-amber/15 blur-[120px] animate-drift [animation-delay:4s]" />
@@ -49,7 +27,6 @@ export default function FAQPage() {
       <div className="relative z-10 flex-1">
         <Header />
 
-        {/* 2. Hero Banner */}
         <section className="relative overflow-hidden min-h-[35vh] flex items-center justify-center pt-36 sm:pt-40 md:pt-44 pb-12">
           <div className="absolute inset-0 z-0">
             <Image
@@ -66,23 +43,22 @@ export default function FAQPage() {
           <div className="container-brand relative z-10 text-center">
             <FadeUp delay={0.1}>
               <h1 className="text-display-md md:text-display-lg font-heading text-brand-light mb-3 tracking-tight">
-                Frequently Asked <span className="bg-gradient-signal bg-clip-text text-transparent">Questions</span>
+                {t.faq.heroTitlePrefix} <span className="bg-gradient-signal bg-clip-text text-transparent">{t.faq.heroTitleSuffix}</span>
               </h1>
             </FadeUp>
 
             <FadeUp delay={0.2}>
               <p className="text-body-lg text-brand-light/60 max-w-xl mx-auto leading-relaxed">
-                Find answers to common questions about our machinery line, support services, and procurement processes.
+                {t.faq.heroSubtitle}
               </p>
             </FadeUp>
           </div>
         </section>
 
-        {/* 3. FAQ Accordion Section */}
         <section className="section-brand relative pb-20">
           <div className="container-brand max-w-3xl">
             <StaggerContainer className="flex flex-col gap-4">
-              {faqs.map((faq, index) => (
+              {t.faq.items.map((faq, index) => (
                 <StaggerItem
                   key={index}
                   className="glass-panel border border-glass-border rounded-brand-xl overflow-hidden shadow-xl transition-colors duration-200"
@@ -124,28 +100,27 @@ export default function FAQPage() {
                     }`}
                   >
                     <div className="p-6 pt-2 text-body-md text-brand-muted border-t border-glass-border leading-relaxed">
-                      {faq.answer}
+                      {faq.answer.replace("{name}", company.name)}
                     </div>
                   </div>
                 </StaggerItem>
               ))}
             </StaggerContainer>
 
-            {/* Bottom Contact CTA Box */}
             <FadeUp delay={0.3} className="mt-12 text-center">
               <div className="glass-panel border border-glass-border rounded-brand-xl p-8 shadow-xl">
                 <h3 className="font-heading text-heading-md text-brand-light mb-2">
-                  Have more questions?
+                  {t.faq.haveMoreQuestions}
                 </h3>
                 <p className="text-body-sm text-brand-muted mb-6">
-                  Can&apos;t find the answer you&apos;re looking for? Reach out directly to our engineering desk.
+                  {t.faq.cantFindAnswer}
                 </p>
                 <Button
                   asChild
                   variant="primary"
                   className="bg-gradient-signal text-white font-semibold py-3 px-8 rounded-full shadow-lg shadow-brand-amber/10 hover:opacity-90 transition-opacity"
                 >
-                  <Link href="/contact">Contact Our Team</Link>
+                  <Link href="/contact">{t.faq.contactOurTeam}</Link>
                 </Button>
               </div>
             </FadeUp>

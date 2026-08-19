@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { FadeUp } from "@/components/ui/MotionWrapper";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export default function NotFound() {
+  const { t } = useLocale();
   return (
     <div className="relative min-h-screen bg-black text-brand-light font-sans selection:bg-brand-amber/30 selection:text-brand-light flex flex-col justify-between">
       {/* 1. Global Ambient Background Glow */}
@@ -25,11 +29,11 @@ export default function NotFound() {
             </h1>
 
             <h2 className="font-heading text-heading-lg text-brand-light mb-3">
-              Page Not Found
+              {t.notFound.title}
             </h2>
 
             <p className="text-body-sm text-brand-muted max-w-md mx-auto mb-8 leading-relaxed">
-              The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+              {t.notFound.description}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -38,7 +42,7 @@ export default function NotFound() {
                 variant="primary"
                 className="w-full sm:w-auto bg-gradient-signal text-white font-semibold py-3 px-6 rounded-full shadow-lg shadow-brand-amber/10 hover:opacity-90 transition-opacity"
               >
-                <Link href="/">Return Home</Link>
+                <Link href="/">{t.notFound.returnHome}</Link>
               </Button>
 
               <Button
@@ -46,7 +50,7 @@ export default function NotFound() {
                 variant="outline"
                 className="w-full sm:w-auto border border-glass-border text-brand-light hover:bg-white/10 py-3 px-6 rounded-full transition-colors"
               >
-                <Link href="/products">View Machinery</Link>
+                <Link href="/products">{t.notFound.viewMachinery}</Link>
               </Button>
             </div>
           </div>

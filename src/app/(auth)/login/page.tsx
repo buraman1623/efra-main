@@ -5,11 +5,13 @@ import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
 import { FadeUp } from "@/components/ui/MotionWrapper";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const supabase = createClient();
+  const { t } = useLocale();
 
   const next = searchParams.get("next") || "/";
   const safeNext =
@@ -45,10 +47,10 @@ function LoginForm() {
 
           <div className="text-center mb-8">
             <h1 className="font-heading text-display-xs text-brand-light">
-              Welcome Back
+              {t.login.welcomeBack}
             </h1>
             <p className="mt-3 text-body-sm text-brand-muted leading-relaxed">
-              Sign in with Google to bookmark machinery and manage your quote requests.
+              {t.login.subtitle}
             </p>
           </div>
 
@@ -82,12 +84,12 @@ function LoginForm() {
               </svg>
             )}
             <span className="font-semibold text-body-sm">
-              {isLoading ? "Connecting..." : "Continue with Google"}
+              {isLoading ? t.login.connecting : t.login.continueWithGoogle}
             </span>
           </Button>
 
           <p className="mt-8 text-center text-xs text-brand-muted/60">
-            We only collect your name, email address, and profile photo for authentication.
+            {t.login.privacyNote}
           </p>
         </div>
       </FadeUp>

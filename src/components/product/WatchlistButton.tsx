@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/Button";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 interface WatchlistButtonProps {
   productId: string;
@@ -22,6 +23,7 @@ export function WatchlistButton({
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
+  const { t } = useLocale();
 
   const checkWatchlistStatus = useCallback(async () => {
     setIsLoading(true);
@@ -107,7 +109,7 @@ export function WatchlistButton({
           d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
         />
       </svg>
-      {isSaved ? "Saved to Watchlist" : "Save to Watchlist"}
+      {isSaved ? t.products.savedToWatchlist : t.products.saveToWatchlist}
     </Button>
   );
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Dictionary } from "@/lib/i18n/dictionaries";
 
 export const quoteRequestSchema = z.object({
   full_name: z
@@ -32,6 +33,51 @@ export const contactFormSchema = z.object({
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
+
+/**
+ * Locale-aware version of `quoteRequestSchema`. The public Quote Request
+ * form (`QuoteForm.tsx`) uses this so validation errors show in whichever
+ * language the visitor currently has selected, sourced from the same
+ * `validation.*` dictionary keys used everywhere else on the site.
+ */
+export function createQuoteRequestSchema(t: Dictionary) {
+  return z.object({
+    full_name: z
+      .string()
+      .min(2, t.validation.nameMin)
+      .max(100, t.validation.nameMax),
+    company: z.string().max(200).optional().or(z.literal("")),
+    email: z.string().email(t.validation.emailInvalid),
+    phone: z
+      .string()
+      .min(9, t.validation.phoneMin)
+      .max(20, t.validation.phoneMax),
+    whatsapp: z.string().max(20).optional().or(z.literal("")),
+    product_id: z.string().uuid().optional().or(z.literal("")),
+    product_interest: z.string().max(300).optional().or(z.literal("")),
+    message: z.string().max(2000).optional().or(z.literal("")),
+  });
+}
+
+/**
+ * Locale-aware version of `contactFormSchema`, used by the public Contact
+ * form (`ContactForm.tsx`).
+ */
+export function createContactFormSchema(t: Dictionary) {
+  return z.object({
+    full_name: z
+      .string()
+      .min(2, t.validation.nameMin)
+      .max(100, t.validation.nameMax),
+    email: z.string().email(t.validation.emailInvalid),
+    phone: z
+      .string()
+      .min(9, t.validation.phoneMin)
+      .max(20, t.validation.phoneMax),
+    subject: z.string().min(3).max(200),
+    message: z.string().min(10).max(2000),
+  });
+}
 
 export const MIN_PRODUCT_IMAGES = 3;
 export const MAX_PRODUCT_IMAGES = 10;

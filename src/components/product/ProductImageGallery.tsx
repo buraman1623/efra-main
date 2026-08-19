@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import DynamicModelViewer from "./DynamicModelViewer";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 type ViewMode =
   | { type: "image"; index: number }
@@ -23,6 +24,7 @@ export function ProductImageGallery({
 }: ProductImageGalleryProps) {
   const has3d = Boolean(modelUrl?.trim());
   const [view, setView] = useState<ViewMode>({ type: "image", index: 0 });
+  const { t } = useLocale();
 
   const activeImage =
     view.type === "image" ? images[view.index] ?? images[0] : images[0];
@@ -45,7 +47,9 @@ export function ProductImageGallery({
                   ? "border-brand-primary"
                   : "border-[var(--color-border)] hover:border-brand-primary/50"
               }`}
-              aria-label={`View image ${index + 1} of ${images.length}`}
+              aria-label={t.products.viewImage
+                .replace("{index}", String(index + 1))
+                .replace("{total}", String(images.length))}
               aria-pressed={isActive}
             >
               <Image
@@ -71,7 +75,7 @@ export function ProductImageGallery({
               ? "border-[var(--color-border)] bg-brand-surface/50 hover:border-brand-primary/50"
               : "cursor-not-allowed border-[var(--color-border)] bg-brand-surface/30 opacity-50"
           }`}
-          aria-label={has3d ? "View 3D model" : "3D model not available"}
+          aria-label={has3d ? t.products.view3dModel : t.products.modelNotAvailable}
           aria-pressed={view.type === "3d"}
         >
           <svg

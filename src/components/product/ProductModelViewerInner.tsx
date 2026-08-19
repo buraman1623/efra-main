@@ -11,6 +11,7 @@ import {
 } from "@react-three/drei";
 import type { Group } from "three";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 type MachineVariant = "crusher" | "tractor" | "ballMill" | "default";
 
@@ -172,6 +173,7 @@ export default function ProductModelViewerInner({
   className,
 }: ProductModelViewerInnerProps) {
   const variant = resolveVariant(modelNumber, modelUrl);
+  const { t } = useLocale();
 
   return (
     <div
@@ -192,10 +194,10 @@ export default function ProductModelViewerInner({
       </Canvas>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-brand-primary/80 to-transparent p-4">
         <p className="text-label uppercase tracking-widest text-brand-accent/90">
-          Interactive 3D Preview
+          {t.products.interactive3dPreview}
         </p>
         <p className="text-body-sm text-brand-light/60">
-          Drag to rotate · Scroll to zoom
+          {t.products.dragToRotate}
         </p>
       </div>
     </div>

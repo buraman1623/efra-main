@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ContactForm } from "./ContactForm";
 import { QuoteForm } from "./QuoteForm";
 import { cn } from "@/lib/utils";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 interface ContactFormsProps {
   isQuote: boolean;
@@ -11,6 +12,7 @@ interface ContactFormsProps {
 }
 
 export function ContactForms({ isQuote, defaultProduct }: ContactFormsProps) {
+  const { t } = useLocale();
   return (
     <div className="rounded-brand-xl border border-glass-border bg-black/40 backdrop-blur-md p-6 sm:p-8 shadow-2xl">
       {/* Tab Switcher Bar */}
@@ -24,7 +26,7 @@ export function ContactForms({ isQuote, defaultProduct }: ContactFormsProps) {
               : "border-transparent text-brand-muted hover:text-white hover:bg-white/[0.01]"
           )}
         >
-          Send a Message
+          {t.forms.sendAMessage}
         </Link>
         <Link
           href={
@@ -39,7 +41,7 @@ export function ContactForms({ isQuote, defaultProduct }: ContactFormsProps) {
               : "border-transparent text-brand-muted hover:text-white hover:bg-white/[0.01]"
           )}
         >
-          Request a Quote
+          {t.forms.requestAQuote}
         </Link>
       </div>
 

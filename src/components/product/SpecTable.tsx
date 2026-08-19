@@ -1,10 +1,14 @@
+"use client";
+
 import { ProductSpecs } from "@/types";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 interface SpecTableProps {
   specs: ProductSpecs;
 }
 
 export function SpecTable({ specs }: SpecTableProps) {
+  const { t } = useLocale();
   const specEntries = Object.entries(specs).filter(
     ([, value]) => value !== null && value !== "" && value !== undefined
   );
@@ -12,7 +16,7 @@ export function SpecTable({ specs }: SpecTableProps) {
   if (specEntries.length === 0) {
     return (
       <div className="p-6 glass-panel border border-glass-border rounded-brand-md text-brand-muted text-center text-body-sm">
-        Specifications not available for this model.
+        {t.products.specsNotAvailable}
       </div>
     );
   }
@@ -43,8 +47,8 @@ export function SpecTable({ specs }: SpecTableProps) {
               <td className="py-3.5 px-5 text-body-sm font-semibold text-brand-light border-b border-glass-border last:border-0">
                 {typeof value === "boolean"
                   ? value
-                    ? "Yes"
-                    : "No"
+                    ? t.common.yes
+                    : t.common.no
                   : String(value)}
               </td>
             </tr>

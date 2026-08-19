@@ -11,6 +11,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { models } from "@/lib/assets/images";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 // Catch 404s or missing .glb files safely
 class ModelErrorBoundary extends Component<
@@ -101,6 +102,7 @@ export default function ProductModelViewer({
 }: ProductModelViewerProps) {
   const urlToLoad =
     modelUrl || models[fallbackModelType] || models.placeholder;
+  const { t } = useLocale();
 
   if (urlToLoad) {
     useGLTF.preload(urlToLoad);
@@ -110,7 +112,7 @@ export default function ProductModelViewer({
     <div className="w-full h-full min-h-[400px] md:min-h-[600px] bg-gradient-to-b from-[var(--color-bg-elevated)] to-[var(--color-bg)] rounded-brand-xl overflow-hidden relative cursor-grab active:cursor-grabbing border border-[var(--color-border)] shadow-brand-sm">
       <div className="absolute top-4 left-4 z-10 bg-brand-surface/80 backdrop-blur-sm text-[var(--color-text)] text-xs font-semibold px-3 py-1.5 rounded-full border border-brand-border flex items-center gap-2 shadow-brand-sm">
         <span className="w-2 h-2 rounded-full bg-brand-secondary animate-pulse" />
-        Interactive 3D Viewer
+        {t.products.interactive3dViewer}
       </div>
 
       <Canvas shadows camera={{ position: [0, 2, 5], fov: 45 }}>

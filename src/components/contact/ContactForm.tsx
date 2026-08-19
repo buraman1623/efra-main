@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { contactFormSchema, type ContactFormData } from "@/lib/validation/schemas";
-import { createClient } from "@/lib/supabase/client";
+import { createContactFormSchema, type ContactFormData } from "@/lib/validation/schemas";
 import { Button, Input, Textarea } from "@/components/ui";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const { t } = useLocale();
+  const contactFormSchema = useMemo(() => createContactFormSchema(t), [t]);
 
   const {
     register,
@@ -22,21 +24,16 @@ export function ContactForm() {
 
   async function onSubmit(data: ContactFormData) {
     setSubmitError(null);
-    const supabase = createClient();
 
-    const { error } = await supabase.from("contact_messages").insert({
-      full_name: data.full_name.trim(),
-      email: data.email.trim(),
-      phone: data.phone.trim(),
-      subject: data.subject.trim(),
-      message: data.message.trim(),
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
 
-    if (error) {
-      console.error("Contact form submission failed:", error);
-      setSubmitError(
-        "We couldn't send your message. Please try again or call us directly."
-      );
+    if (!res.ok) {
+      console.error("Contact form submission failed:", await res.text());
+      setSubmitError(t.forms.contactErrorGeneric);
       return;
     }
 
@@ -53,10 +50,10 @@ export function ContactForm() {
           </svg>
         </div>
         <h3 className="text-lg font-semibold text-white">
-          Message sent successfully
+          {t.forms.messageSentTitle}
         </h3>
         <p className="mt-2 text-sm text-brand-muted">
-          Our team will respond within one business day.
+          {t.forms.messageSentDesc}
         </p>
         <Button
           variant="outline"
@@ -64,7 +61,7 @@ export function ContactForm() {
           className="mt-6 border-glass-border bg-white/5 text-white hover:bg-white/10 text-xs"
           onClick={() => setSubmitted(false)}
         >
-          Send another message
+          {t.forms.submitAnotherMessage}
         </Button>
       </div>
     );
@@ -74,16 +71,16 @@ export function ContactForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid gap-5 sm:grid-cols-2">
         <Input
-          label="Full Name"
-          placeholder="Your name"
+          label={t.forms.fullName}
+          placeholder={t.forms.fullNamePlaceholder}
           error={errors.full_name?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
           {...register("full_name")}
         />
         <Input
-          label="Email"
+          label={t.forms.email}
           type="email"
-          placeholder="you@company.com"
+          placeholder={t.forms.emailPlaceholder}
           error={errors.email?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
           {...register("email")}
@@ -92,16 +89,16 @@ export function ContactForm() {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Input
-          label="Phone / WhatsApp"
+          label={t.forms.phoneWhatsapp}
           type="tel"
-          placeholder="0911674126"
+          placeholder={t.forms.phonePlaceholder}
           error={errors.phone?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
           {...register("phone")}
         />
         <Input
-          label="Subject"
-          placeholder="How can we help?"
+          label={t.forms.subject}
+          placeholder={t.forms.subjectPlaceholder}
           error={errors.subject?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
           {...register("subject")}
@@ -109,8 +106,8 @@ export function ContactForm() {
       </div>
 
       <Textarea
-        label="Message"
-        placeholder="Tell us about your inquiry…"
+        label={t.forms.message}
+        placeholder={t.forms.messagePlaceholder}
         rows={5}
         error={errors.message?.message}
         className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm leading-relaxed"
@@ -129,11 +126,11 @@ export function ContactForm() {
           isLoading={isSubmitting}
           className="w-full sm:w-auto bg-brand-amber hover:bg-brand-amber/90 text-black font-semibold text-sm px-8 py-2.5 transition-all"
         >
-          Send Message
+          {t.forms.sendMessage}
         </Button>
 
         <p className="text-xs text-brand-muted/70">
-          Your information is kept secure and never shared with third parties.
+          {t.forms.privacyNote}
         </p>
       </div>
     </form>

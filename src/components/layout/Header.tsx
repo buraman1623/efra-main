@@ -5,18 +5,44 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { mainNavigation } from "@/lib/content/company";
 import { UserMenu } from "@/components/auth/UserMenu";
+import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 import { cn } from "@/lib/utils";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { t } = useLocale();
 
   // Close mobile menu on path change
   useEffect(() => {
     setMobileMenuOpen(false);
   }, [pathname]);
+
+  const mainNavigation = [
+    { label: t.nav.home, href: "/" },
+    { label: t.nav.about, href: "/about" },
+    {
+      label: t.nav.machinery,
+      href: "/products",
+      children: [
+        { label: t.nav.miningEquipment, href: "/products/mining-mineral-processing" },
+        { label: t.nav.agriculturalMachinery, href: "/products/agricultural-machinery" },
+        { label: t.nav.industrialMachinery, href: "/products/industrial-machinery" },
+      ],
+    },
+    {
+      label: t.nav.services,
+      href: "/services",
+      children: [
+        { label: t.nav.maintenanceRepairs, href: "/services/technical-maintenance-repairs" },
+        { label: t.nav.installationCommissioning, href: "/services/installation-commissioning" },
+        { label: t.nav.equipmentProcurement, href: "/services/equipment-procurement-sales" },
+      ],
+    },
+    { label: t.nav.contact, href: "/contact" },
+  ];
 
   return (
     <header className="fixed top-4 left-0 right-0 z-50 px-3 sm:px-4">
@@ -69,6 +95,7 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-4">
+          <LanguageSwitcher />
           <UserMenu />
         </div>
 
@@ -76,7 +103,7 @@ export function Header() {
         <button
           className="lg:hidden p-2 text-brand-light shrink-0"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
+          aria-label={t.nav.toggleMenu}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -129,8 +156,9 @@ export function Header() {
                   )}
                 </div>
               ))}
-              <div className="mt-4 pt-4 border-t border-glass-border">
+              <div className="mt-4 pt-4 border-t border-glass-border flex items-center justify-between gap-4">
                 <UserMenu />
+                <LanguageSwitcher />
               </div>
             </div>
           </motion.div>

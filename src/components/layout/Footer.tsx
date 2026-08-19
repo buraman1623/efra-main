@@ -1,9 +1,39 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { company, footerNavigation } from "@/lib/content/company";
+import { company } from "@/lib/content/company";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
+  const { t } = useLocale();
+
+  const footerNavigation = {
+    products: [
+      { label: t.footer.goldWashingSystems, href: "/products/gold-washing-systems" },
+      { label: t.footer.industrialCrushers, href: "/products/industrial-crushers" },
+      { label: t.footer.ballMills, href: "/products/fine-grinding-mills" },
+      { label: t.footer.tractorsTillage, href: "/products/tractors-primary-tillage" },
+    ],
+    services: [
+      { label: t.footer.maintenanceRepairs, href: "/services/technical-maintenance-repairs" },
+      { label: t.footer.installation, href: "/services/installation-commissioning" },
+      { label: t.footer.procurementSales, href: "/services/equipment-procurement-sales" },
+    ],
+    company: [
+      { label: t.footer.aboutUs, href: "/about" },
+      { label: t.footer.contact, href: "/contact" },
+      { label: t.footer.requestQuote, href: "/contact?tab=quote" },
+      { label: t.footer.faq, href: "/faq" },
+    ],
+    legal: [
+      { label: t.footer.privacyPolicy, href: "/privacy" },
+      { label: t.footer.termsConditions, href: "/terms" },
+      { label: t.footer.cookiePolicy, href: "/cookies" },
+      { label: t.footer.sitemap, href: "/sitemap" },
+    ],
+  };
 
   return (
     <footer className="text-brand-light relative overflow-hidden pt-16 lg:pt-24 pb-8">
@@ -21,7 +51,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-brand-muted text-body-sm leading-relaxed max-w-sm">
-              Empowering Ethiopia&apos;s mining and agricultural sectors by supplying tailored, high-performance machinery, reliable local engineering, and exceptional after-sales support.
+              {t.footer.tagline}
             </p>
             <div className="flex flex-col gap-2 text-body-sm text-brand-muted mt-2">
               <p className="flex items-start gap-2">
@@ -55,7 +85,7 @@ export function Footer() {
 
           {/* Navigation Links */}
           <div className="lg:col-span-2 lg:col-start-6">
-            <h3 className="text-white font-heading font-semibold mb-4 uppercase tracking-wider text-sm">Machinery</h3>
+            <h3 className="text-white font-heading font-semibold mb-4 uppercase tracking-wider text-sm">{t.footer.machineryHeading}</h3>
             <ul className="flex flex-col gap-3">
               {footerNavigation.products.map((item) => (
                 <li key={item.href}>
@@ -68,7 +98,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="text-white font-heading font-semibold mb-4 uppercase tracking-wider text-sm">Services</h3>
+            <h3 className="text-white font-heading font-semibold mb-4 uppercase tracking-wider text-sm">{t.footer.servicesHeading}</h3>
             <ul className="flex flex-col gap-3">
               {footerNavigation.services.map((item) => (
                 <li key={item.href}>
@@ -81,7 +111,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="text-white font-heading font-semibold mb-4 uppercase tracking-wider text-sm">Company</h3>
+            <h3 className="text-white font-heading font-semibold mb-4 uppercase tracking-wider text-sm">{t.footer.companyHeading}</h3>
             <ul className="flex flex-col gap-3">
               {footerNavigation.company.map((item) => (
                 <li key={item.href}>
@@ -97,7 +127,7 @@ export function Footer() {
         {/* Bottom Footer */}
         <div className="border-t border-brand-border/30 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-brand-muted text-xs">
-            © {currentYear} {company.legalName}. All rights reserved.
+            © {currentYear} {company.legalName}. {t.footer.allRightsReserved}
           </p>
           <div className="flex items-center gap-6">
             {footerNavigation.legal.map((item) => (

@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { FadeIn } from "@/components/ui/MotionWrapper";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
+  const { t } = useLocale();
 
   if (pathname === "/") return null;
 
@@ -31,7 +33,7 @@ export function Breadcrumbs() {
               href="/"
               className="text-brand-muted transition-colors hover:text-brand-amber"
             >
-              Home
+              {t.breadcrumbs.home}
             </Link>
           </li>
 

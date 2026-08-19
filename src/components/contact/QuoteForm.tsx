@@ -1,28 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  quoteRequestSchema,
+  createQuoteRequestSchema,
   type QuoteRequestFormData,
 } from "@/lib/validation/schemas";
-import { createClient } from "@/lib/supabase/client";
 import { Button, Input, Textarea } from "@/components/ui";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 interface QuoteFormProps {
   defaultProduct?: string;
   productId?: string;
 }
 
-function emptyToNull(value?: string) {
-  const trimmed = value?.trim();
-  return trimmed ? trimmed : null;
-}
-
 export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const { t } = useLocale();
+  const quoteRequestSchema = useMemo(() => createQuoteRequestSchema(t), [t]);
 
   const {
     register,
@@ -39,29 +36,16 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
 
   async function onSubmit(data: QuoteRequestFormData) {
     setSubmitError(null);
-    const supabase = createClient();
 
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    const { error } = await supabase.from("quote_requests").insert({
-      full_name: data.full_name.trim(),
-      company: emptyToNull(data.company),
-      email: data.email.trim(),
-      phone: data.phone.trim(),
-      whatsapp: emptyToNull(data.whatsapp),
-      product_interest: emptyToNull(data.product_interest),
-      product_id: emptyToNull(data.product_id),
-      message: emptyToNull(data.message),
-      user_id: user?.id ?? null,
+    const res = await fetch("/api/quote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
 
-    if (error) {
-      console.error("Quote request submission failed:", error);
-      setSubmitError(
-        "We couldn't submit your quote request. Please try again or call us directly."
-      );
+    if (!res.ok) {
+      console.error("Quote request submission failed:", await res.text());
+      setSubmitError(t.forms.quoteErrorGeneric);
       return;
     }
 
@@ -81,10 +65,10 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
           </svg>
         </div>
         <h3 className="text-lg font-semibold text-white">
-          Quote request received
+          {t.forms.quoteReceivedTitle}
         </h3>
         <p className="mt-2 text-sm text-brand-muted">
-          Our sales team will contact you shortly to discuss availability and pricing.
+          {t.forms.quoteReceivedDesc}
         </p>
         <Button
           variant="outline"
@@ -92,7 +76,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
           className="mt-6 border-glass-border bg-white/5 text-white hover:bg-white/10 text-xs"
           onClick={() => setSubmitted(false)}
         >
-          Submit another request
+          {t.forms.submitAnotherRequest}
         </Button>
       </div>
     );
@@ -102,15 +86,15 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="grid gap-5 sm:grid-cols-2">
         <Input
-          label="Full Name"
-          placeholder="Your name"
+          label={t.forms.fullName}
+          placeholder={t.forms.fullNamePlaceholder}
           error={errors.full_name?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
           {...register("full_name")}
         />
         <Input
-          label="Company"
-          placeholder="Company name (optional)"
+          label={t.forms.company}
+          placeholder={t.forms.companyPlaceholder}
           error={errors.company?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
           {...register("company")}
@@ -119,17 +103,17 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Input
-          label="Email"
+          label={t.forms.email}
           type="email"
-          placeholder="you@company.com"
+          placeholder={t.forms.emailPlaceholder}
           error={errors.email?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
           {...register("email")}
         />
         <Input
-          label="Phone"
+          label={t.forms.phone}
           type="tel"
-          placeholder="0911674126"
+          placeholder={t.forms.phonePlaceholder}
           error={errors.phone?.message}
           className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
           {...register("phone")}
@@ -137,18 +121,18 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
       </div>
 
       <Input
-        label="WhatsApp"
+        label={t.forms.whatsappLabel}
         type="tel"
-        placeholder="Optional WhatsApp number"
-        hint="We often respond faster via WhatsApp"
+        placeholder={t.forms.whatsappPlaceholder}
+        hint={t.forms.whatsappHint}
         error={errors.whatsapp?.message}
         className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
         {...register("whatsapp")}
       />
 
       <Input
-        label="Machinery of Interest"
-        placeholder="e.g. GCM-01 Industrial Crusher"
+        label={t.forms.machineryOfInterest}
+        placeholder={t.forms.machineryOfInterestPlaceholder}
         error={errors.product_interest?.message}
         className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
         {...register("product_interest")}
@@ -157,8 +141,8 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
       <input type="hidden" {...register("product_id")} />
 
       <Textarea
-        label="Additional Details"
-        placeholder="Capacity requirements, delivery location, timeline…"
+        label={t.forms.additionalDetails}
+        placeholder={t.forms.additionalDetailsPlaceholder}
         rows={4}
         error={errors.message?.message}
         className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm leading-relaxed"
@@ -177,11 +161,11 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
           isLoading={isSubmitting}
           className="w-full sm:w-auto bg-brand-amber hover:bg-brand-amber/90 text-black font-semibold text-sm px-8 py-2.5 transition-all"
         >
-          Request a Quote
+          {t.forms.requestAQuote}
         </Button>
 
         <p className="text-xs text-brand-muted/70">
-          Your information is kept secure and never shared with third parties.
+          {t.forms.privacyNote}
         </p>
       </div>
     </form>

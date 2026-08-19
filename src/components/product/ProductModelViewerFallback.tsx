@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import { Loader } from "@/components/ui";
 import { getProductImage } from "@/lib/assets/images";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 interface ProductModelViewerFallbackProps {
   modelNumber?: string;
@@ -13,8 +16,10 @@ export function ProductModelViewerFallback({
   modelNumber,
   productName,
   imageUrl,
-  message = "Loading 3D preview…",
+  message,
 }: ProductModelViewerFallbackProps) {
+  const { t } = useLocale();
+  const resolvedMessage = message ?? t.products.loadingPreview;
   const fallbackImage =
     imageUrl ?? (modelNumber ? getProductImage(modelNumber) : getProductImage("gcm-01"));
 
@@ -29,7 +34,7 @@ export function ProductModelViewerFallback({
       />
       <div className="absolute inset-0 bg-gradient-to-br from-brand-primary/80 via-brand-primary/60 to-brand-surface/40" />
       <div className="relative z-10 flex flex-col items-center gap-4 px-6 text-center">
-        <Loader size="md" label={message} />
+        <Loader size="md" label={resolvedMessage} />
         {modelNumber && (
           <div>
             <p className="text-label uppercase tracking-widest text-brand-accent">
