@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui";
+import { useLocale } from "@/lib/i18n/LocaleProvider";
 import type { Profile } from "@/types";
 
 export function UserMenu() {
@@ -12,6 +13,7 @@ export function UserMenu() {
   const [loading, setLoading] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const supabase = createClient();
+  const { t } = useLocale();
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -79,7 +81,7 @@ export function UserMenu() {
         asChild
         className="bg-brand-amber hover:bg-brand-amber/90 text-black font-semibold text-xs px-5 py-2 transition-all"
       >
-        <Link href="/login">Login</Link>
+        <Link href="/login">{t.nav.login}</Link>
       </Button>
     );
   }
@@ -94,7 +96,7 @@ export function UserMenu() {
         type="button"
         onClick={() => setMenuOpen(!menuOpen)}
         className="flex items-center gap-2 rounded-full ring-offset-black focus:outline-none focus:ring-2 focus:ring-brand-amber focus:ring-offset-2 transition-transform active:scale-95"
-        aria-label="User menu"
+        aria-label={t.nav.userMenu}
         aria-expanded={menuOpen}
       >
         {profile.avatar_url ? (
@@ -156,8 +158,31 @@ export function UserMenu() {
                     d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
                   />
                 </svg>
-                My Watchlist
+                {t.nav.myWatchlist}
               </Link>
+
+              {profile.role === "admin" && (
+                <Link
+                  href="/admin"
+                  className="flex items-center gap-2 px-3 py-2 text-xs font-medium text-brand-amber/90 hover:text-brand-amber hover:bg-brand-amber/10 rounded-brand-md transition-colors"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <svg
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
+                  </svg>
+                  {t.nav.adminPanel}
+                </Link>
+              )}
             </div>
 
             <div className="pt-1">
@@ -179,7 +204,7 @@ export function UserMenu() {
                     d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                   />
                 </svg>
-                Sign Out
+                {t.nav.signOut}
               </button>
             </div>
           </div>
