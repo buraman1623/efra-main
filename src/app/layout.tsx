@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { Inter, Montserrat } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import { seoDefaults } from "@/lib/content/company";
 import { MotionProvider } from "@/components/ui/MotionProvider";
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
@@ -73,6 +74,7 @@ export default async function RootLayout({
         <LocaleProvider initialLocale={initialLocale}>
           <MotionProvider>{children}</MotionProvider>
         </LocaleProvider>
+        <Analytics />
       </body>
     </html>
   );
