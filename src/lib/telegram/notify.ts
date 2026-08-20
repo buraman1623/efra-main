@@ -34,20 +34,41 @@ function getConfig() {
 }
 
 async function sendTelegramMessage(text: string): Promise<void> {
+  await sendTelegramMessageWithResults(text);
+}
+
+export interface TelegramSendResult {
+  chatId: string;
+  ok: boolean;
+  status?: number;
+  body?: string;
+  error?: string;
+}
+
+/**
+ * Same as sendTelegramMessage, but returns a per-chat result instead of
+ * only logging — used by the /api/telegram/test diagnostic route so you
+ * can see exactly why a message did or didn't go through (bad token,
+ * chat not started, wrong chat ID, etc.) instead of it disappearing into
+ * server logs.
+ */
+export async function sendTelegramMessageWithResults(
+  text: string
+): Promise<{ configured: boolean; results: TelegramSendResult[] }> {
   const config = getConfig();
 
   if (!config) {
     console.warn(
       "[telegram] TELEGRAM_BOT_TOKEN / TELEGRAM_ADMIN_CHAT_IDS not set — skipping notification."
     );
-    return;
+    return { configured: false, results: [] };
   }
 
   const { token, chatIds } = config;
   const url = `${TELEGRAM_API_BASE}/bot${token}/sendMessage`;
 
-  await Promise.all(
-    chatIds.map(async (chatId) => {
+  const results = await Promise.all(
+    chatIds.map(async (chatId): Promise<TelegramSendResult> => {
       try {
         const res = await fetch(url, {
           method: "POST",
@@ -60,17 +81,27 @@ async function sendTelegramMessage(text: string): Promise<void> {
           }),
         });
 
+        const body = await res.text();
+
         if (!res.ok) {
-          const body = await res.text();
           console.error(
             `[telegram] sendMessage failed for chat ${chatId}: ${res.status} ${body}`
           );
         }
+
+        return { chatId, ok: res.ok, status: res.status, body };
       } catch (err) {
         console.error(`[telegram] sendMessage threw for chat ${chatId}:`, err);
+        return {
+          chatId,
+          ok: false,
+          error: err instanceof Error ? err.message : String(err),
+        };
       }
     })
   );
+
+  return { configured: true, results };
 }
 
 function escapeHtml(value: string): string {

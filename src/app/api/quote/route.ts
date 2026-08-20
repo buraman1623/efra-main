@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { quoteRequestSchema } from "@/lib/validation/schemas";
 import { notifyNewQuoteRequest } from "@/lib/telegram/notify";
 
@@ -29,11 +30,20 @@ export async function POST(request: Request) {
   const { full_name, company, email, phone, whatsapp, product_interest, product_id, message } =
     parsed.data;
 
-  const supabase = await createClient();
-
+  // Cookie-based client: only used to identify a logged-in visitor, so a
+  // quote request can be linked to their account if they're signed in.
+  const authClient = await createClient();
   const {
     data: { user },
-  } = await supabase.auth.getUser();
+  } = await authClient.auth.getUser();
+
+  // Service role client: this route is the trusted, validated write path
+  // for a public form. Anonymous (and most logged-in) visitors are
+  // allowed to INSERT here but can't SELECT it back afterward (that's
+  // admin/owner-only), so the anon-key client can't read the row back
+  // after inserting it — the service role bypasses that safely, since
+  // we've already validated everything above.
+  const supabase = createServiceClient();
 
   const { data, error } = await supabase
     .from("quote_requests")

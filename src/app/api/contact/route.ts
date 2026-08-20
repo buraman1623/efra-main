@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { contactFormSchema } from "@/lib/validation/schemas";
 import { notifyNewContactMessage } from "@/lib/telegram/notify";
 
@@ -23,7 +23,12 @@ export async function POST(request: Request) {
 
   const { full_name, email, phone, subject, message } = parsed.data;
 
-  const supabase = await createClient();
+  // Service role client: this route is the trusted, validated write path
+  // for a public form. Anonymous visitors are allowed to INSERT here but
+  // not SELECT (that's admin-only), so the anon-key client can't read the
+  // row back after inserting it — the service role bypasses that safely,
+  // since we've already validated everything above.
+  const supabase = createServiceClient();
 
   const { data, error } = await supabase
     .from("contact_messages")
