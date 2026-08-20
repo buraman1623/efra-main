@@ -72,10 +72,17 @@ export async function POST(request: Request) {
       );
     }
 
-    // Fire-and-forget: don't let a Telegram outage fail the user's submission.
-    notifyNewQuoteRequest(data).catch((err) =>
-      console.error("Telegram notification failed:", err)
-    );
+    // NOTE: this is deliberately awaited, not fire-and-forget. On Vercel
+    // (and serverless generally), the function's execution environment
+    // freezes as soon as the response is returned — an un-awaited promise
+    // here gets silently cut off mid-flight before the Telegram request
+    // completes, which is why messages weren't arriving. We still wrap it
+    // so a Telegram outage can't fail the user's submission.
+    try {
+      await notifyNewQuoteRequest(data);
+    } catch (err) {
+      console.error("Telegram notification failed:", err);
+    }
 
     return NextResponse.json({ success: true, id: data.id }, { status: 201 });
   } catch (err) {
