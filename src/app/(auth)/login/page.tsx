@@ -13,9 +13,18 @@ function LoginForm() {
   const supabase = createClient();
   const { t } = useLocale();
 
-  const next = searchParams.get("next") || "/";
-  const safeNext =
-    next.startsWith("/") && !next.startsWith("//") ? next : "/";
+  // Only treat `next` as "explicit" if it was genuinely present in the URL
+  // and isn't just the plain root. If we always defaulted this to "/" and
+  // sent it along, the callback route could never tell "nobody asked to
+  // go anywhere in particular" apart from "someone explicitly asked for
+  // the homepage" — and admins would never get their /admin redirect,
+  // since an explicit destination (even "/") always wins over role-based
+  // routing by design.
+  const rawNext = searchParams.get("next");
+  const explicitNext =
+    rawNext && rawNext !== "/" && rawNext.startsWith("/") && !rawNext.startsWith("//")
+      ? rawNext
+      : null;
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
@@ -23,7 +32,9 @@ function LoginForm() {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=${encodeURIComponent(safeNext)}`,
+          redirectTo: `${window.location.origin}/auth/callback${
+            explicitNext ? `?next=${encodeURIComponent(explicitNext)}` : ""
+          }`,
           queryParams: {
             access_type: "online",
             prompt: "consent",

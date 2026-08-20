@@ -64,10 +64,16 @@ export async function POST(request: Request) {
 
     if (error || !data) {
       console.error("Failed to insert quote request:", error);
-      // TEMP: surfacing the real error for debugging. Remove `detail` once
-      // the Telegram/insert issue is confirmed fixed.
+      // Error detail is only included outside production, so real site
+      // visitors never see raw server/DB internals, but preview
+      // deployments stay easy to debug.
       return NextResponse.json(
-        { error: "Failed to submit quote request", detail: error?.message ?? String(error) },
+        {
+          error: "Failed to submit quote request",
+          ...(process.env.NODE_ENV !== "production"
+            ? { detail: error?.message ?? String(error) }
+            : {}),
+        },
         { status: 500 }
       );
     }
@@ -87,12 +93,14 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, id: data.id }, { status: 201 });
   } catch (err) {
     console.error("Quote route threw:", err);
-    // TEMP: surfacing the real error for debugging. Remove `detail` once
-    // the Telegram/insert issue is confirmed fixed.
+    // Error detail is only included outside production, same reasoning as
+    // above.
     return NextResponse.json(
       {
         error: "Server error",
-        detail: err instanceof Error ? err.message : String(err),
+        ...(process.env.NODE_ENV !== "production"
+          ? { detail: err instanceof Error ? err.message : String(err) }
+          : {}),
       },
       { status: 500 }
     );

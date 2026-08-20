@@ -45,10 +45,13 @@ export async function POST(request: Request) {
 
     if (error || !data) {
       console.error("Failed to insert contact message:", error);
-      // TEMP: surfacing the real error for debugging. Remove `detail` once
-      // the Telegram/insert issue is confirmed fixed.
       return NextResponse.json(
-        { error: "Failed to submit message", detail: error?.message ?? String(error) },
+        {
+          error: "Failed to submit message",
+          ...(process.env.NODE_ENV !== "production"
+            ? { detail: error?.message ?? String(error) }
+            : {}),
+        },
         { status: 500 }
       );
     }
@@ -68,12 +71,12 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, id: data.id }, { status: 201 });
   } catch (err) {
     console.error("Contact route threw:", err);
-    // TEMP: surfacing the real error for debugging. Remove `detail` once
-    // the Telegram/insert issue is confirmed fixed.
     return NextResponse.json(
       {
         error: "Server error",
-        detail: err instanceof Error ? err.message : String(err),
+        ...(process.env.NODE_ENV !== "production"
+          ? { detail: err instanceof Error ? err.message : String(err) }
+          : {}),
       },
       { status: 500 }
     );

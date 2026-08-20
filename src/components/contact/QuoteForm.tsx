@@ -46,9 +46,8 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
     if (!res.ok) {
       const bodyText = await res.text();
       console.error("Quote request submission failed:", bodyText);
-      // TEMP: showing the raw server error while we debug the
-      // Telegram/insert issue — revert to just t.forms.quoteErrorGeneric
-      // once confirmed working.
+      // The server only includes `detail` outside production, so this
+      // safely shows just the generic message to real site visitors.
       let detail = "";
       try {
         detail = JSON.parse(bodyText)?.detail ?? "";
