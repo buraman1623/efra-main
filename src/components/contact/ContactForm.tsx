@@ -32,8 +32,20 @@ export function ContactForm() {
     });
 
     if (!res.ok) {
-      console.error("Contact form submission failed:", await res.text());
-      setSubmitError(t.forms.contactErrorGeneric);
+      const bodyText = await res.text();
+      console.error("Contact form submission failed:", bodyText);
+      // TEMP: showing the raw server error while we debug the
+      // Telegram/insert issue — revert to just t.forms.contactErrorGeneric
+      // once confirmed working.
+      let detail = "";
+      try {
+        detail = JSON.parse(bodyText)?.detail ?? "";
+      } catch {
+        // ignore, bodyText wasn't JSON
+      }
+      setSubmitError(
+        detail ? `${t.forms.contactErrorGeneric} (${detail})` : t.forms.contactErrorGeneric
+      );
       return;
     }
 

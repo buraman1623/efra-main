@@ -23,37 +23,52 @@ export async function POST(request: Request) {
 
   const { full_name, email, phone, subject, message } = parsed.data;
 
-  // Service role client: this route is the trusted, validated write path
-  // for a public form. Anonymous visitors are allowed to INSERT here but
-  // not SELECT (that's admin-only), so the anon-key client can't read the
-  // row back after inserting it — the service role bypasses that safely,
-  // since we've already validated everything above.
-  const supabase = createServiceClient();
+  try {
+    // Service role client: this route is the trusted, validated write path
+    // for a public form. Anonymous visitors are allowed to INSERT here but
+    // not SELECT (that's admin-only), so the anon-key client can't read the
+    // row back after inserting it — the service role bypasses that safely,
+    // since we've already validated everything above.
+    const supabase = createServiceClient();
 
-  const { data, error } = await supabase
-    .from("contact_messages")
-    .insert({
-      full_name: full_name.trim(),
-      email: email.trim(),
-      phone: phone.trim(),
-      subject: subject.trim(),
-      message: message.trim(),
-    })
-    .select("id, full_name, email, phone, subject, message")
-    .single();
+    const { data, error } = await supabase
+      .from("contact_messages")
+      .insert({
+        full_name: full_name.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        subject: subject.trim(),
+        message: message.trim(),
+      })
+      .select("id, full_name, email, phone, subject, message")
+      .single();
 
-  if (error || !data) {
-    console.error("Failed to insert contact message:", error);
+    if (error || !data) {
+      console.error("Failed to insert contact message:", error);
+      // TEMP: surfacing the real error for debugging. Remove `detail` once
+      // the Telegram/insert issue is confirmed fixed.
+      return NextResponse.json(
+        { error: "Failed to submit message", detail: error?.message ?? String(error) },
+        { status: 500 }
+      );
+    }
+
+    // Fire-and-forget: don't let a Telegram outage fail the user's submission.
+    notifyNewContactMessage(data).catch((err) =>
+      console.error("Telegram notification failed:", err)
+    );
+
+    return NextResponse.json({ success: true, id: data.id }, { status: 201 });
+  } catch (err) {
+    console.error("Contact route threw:", err);
+    // TEMP: surfacing the real error for debugging. Remove `detail` once
+    // the Telegram/insert issue is confirmed fixed.
     return NextResponse.json(
-      { error: "Failed to submit message" },
+      {
+        error: "Server error",
+        detail: err instanceof Error ? err.message : String(err),
+      },
       { status: 500 }
     );
   }
-
-  // Fire-and-forget: don't let a Telegram outage fail the user's submission.
-  notifyNewContactMessage(data).catch((err) =>
-    console.error("Telegram notification failed:", err)
-  );
-
-  return NextResponse.json({ success: true, id: data.id }, { status: 201 });
 }

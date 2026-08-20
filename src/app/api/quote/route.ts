@@ -30,49 +30,64 @@ export async function POST(request: Request) {
   const { full_name, company, email, phone, whatsapp, product_interest, product_id, message } =
     parsed.data;
 
-  // Cookie-based client: only used to identify a logged-in visitor, so a
-  // quote request can be linked to their account if they're signed in.
-  const authClient = await createClient();
-  const {
-    data: { user },
-  } = await authClient.auth.getUser();
+  try {
+    // Cookie-based client: only used to identify a logged-in visitor, so a
+    // quote request can be linked to their account if they're signed in.
+    const authClient = await createClient();
+    const {
+      data: { user },
+    } = await authClient.auth.getUser();
 
-  // Service role client: this route is the trusted, validated write path
-  // for a public form. Anonymous (and most logged-in) visitors are
-  // allowed to INSERT here but can't SELECT it back afterward (that's
-  // admin/owner-only), so the anon-key client can't read the row back
-  // after inserting it — the service role bypasses that safely, since
-  // we've already validated everything above.
-  const supabase = createServiceClient();
+    // Service role client: this route is the trusted, validated write path
+    // for a public form. Anonymous (and most logged-in) visitors are
+    // allowed to INSERT here but can't SELECT it back afterward (that's
+    // admin/owner-only), so the anon-key client can't read the row back
+    // after inserting it — the service role bypasses that safely, since
+    // we've already validated everything above.
+    const supabase = createServiceClient();
 
-  const { data, error } = await supabase
-    .from("quote_requests")
-    .insert({
-      full_name: full_name.trim(),
-      company: emptyToNull(company),
-      email: email.trim(),
-      phone: phone.trim(),
-      whatsapp: emptyToNull(whatsapp),
-      product_interest: emptyToNull(product_interest),
-      product_id: emptyToNull(product_id),
-      message: emptyToNull(message),
-      user_id: user?.id ?? null,
-    })
-    .select("id, full_name, company, email, phone, whatsapp, product_interest, message")
-    .single();
+    const { data, error } = await supabase
+      .from("quote_requests")
+      .insert({
+        full_name: full_name.trim(),
+        company: emptyToNull(company),
+        email: email.trim(),
+        phone: phone.trim(),
+        whatsapp: emptyToNull(whatsapp),
+        product_interest: emptyToNull(product_interest),
+        product_id: emptyToNull(product_id),
+        message: emptyToNull(message),
+        user_id: user?.id ?? null,
+      })
+      .select("id, full_name, company, email, phone, whatsapp, product_interest, message")
+      .single();
 
-  if (error || !data) {
-    console.error("Failed to insert quote request:", error);
+    if (error || !data) {
+      console.error("Failed to insert quote request:", error);
+      // TEMP: surfacing the real error for debugging. Remove `detail` once
+      // the Telegram/insert issue is confirmed fixed.
+      return NextResponse.json(
+        { error: "Failed to submit quote request", detail: error?.message ?? String(error) },
+        { status: 500 }
+      );
+    }
+
+    // Fire-and-forget: don't let a Telegram outage fail the user's submission.
+    notifyNewQuoteRequest(data).catch((err) =>
+      console.error("Telegram notification failed:", err)
+    );
+
+    return NextResponse.json({ success: true, id: data.id }, { status: 201 });
+  } catch (err) {
+    console.error("Quote route threw:", err);
+    // TEMP: surfacing the real error for debugging. Remove `detail` once
+    // the Telegram/insert issue is confirmed fixed.
     return NextResponse.json(
-      { error: "Failed to submit quote request" },
+      {
+        error: "Server error",
+        detail: err instanceof Error ? err.message : String(err),
+      },
       { status: 500 }
     );
   }
-
-  // Fire-and-forget: don't let a Telegram outage fail the user's submission.
-  notifyNewQuoteRequest(data).catch((err) =>
-    console.error("Telegram notification failed:", err)
-  );
-
-  return NextResponse.json({ success: true, id: data.id }, { status: 201 });
 }

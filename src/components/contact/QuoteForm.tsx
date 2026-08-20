@@ -44,8 +44,20 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
     });
 
     if (!res.ok) {
-      console.error("Quote request submission failed:", await res.text());
-      setSubmitError(t.forms.quoteErrorGeneric);
+      const bodyText = await res.text();
+      console.error("Quote request submission failed:", bodyText);
+      // TEMP: showing the raw server error while we debug the
+      // Telegram/insert issue — revert to just t.forms.quoteErrorGeneric
+      // once confirmed working.
+      let detail = "";
+      try {
+        detail = JSON.parse(bodyText)?.detail ?? "";
+      } catch {
+        // ignore, bodyText wasn't JSON
+      }
+      setSubmitError(
+        detail ? `${t.forms.quoteErrorGeneric} (${detail})` : t.forms.quoteErrorGeneric
+      );
       return;
     }
 
