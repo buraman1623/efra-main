@@ -66,7 +66,7 @@ export default function ProductsPageClient({
                 <h3 className="text-heading-sm font-heading text-brand-light mb-2">
                   {t.products.noCategoriesTitle}
                 </h3>
-                <p className="text-body-sm text-brand-muted leading-relaxed">
+                <p className="text-body-sm text-brand-light/60 leading-relaxed">
                   {t.products.noCategoriesDesc}
                 </p>
               </div>
@@ -103,7 +103,7 @@ export default function ProductsPageClient({
                             <h2 className="text-heading-sm font-heading text-brand-light mb-2 group-hover:text-brand-amber transition-colors">
                               {name}
                             </h2>
-                            <p className="text-body-sm text-brand-muted mb-6 flex-1 leading-relaxed">
+                            <p className="text-body-sm text-brand-light/60 mb-6 flex-1 leading-relaxed">
                               {description}
                             </p>
                             <div className="flex items-center gap-2 text-brand-amber font-semibold text-sm group-hover:translate-x-1 transition-transform">

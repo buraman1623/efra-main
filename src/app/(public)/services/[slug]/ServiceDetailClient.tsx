@@ -44,14 +44,13 @@ export default function ServiceDetailClient({
         <section className="relative overflow-hidden min-h-[35vh] flex items-center justify-center pt-36 sm:pt-40 md:pt-48 pb-12 border-b border-glass-border">
           <div className="absolute inset-0 z-0">
             <Image
-              src={images.hero.about}
+              src={images.hero.service_detail}
               alt="Efra Business Group Facility"
               fill
-              className="object-cover opacity-40 scale-105"
+              className="object-cover opacity-75 scale-105"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
-            <div className="absolute inset-0 shadow-[inset_0_0_160px_70px_rgba(0,0,0,0.6)]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black" />
           </div>
 
           <div className="container-brand relative z-10">
@@ -60,7 +59,7 @@ export default function ServiceDetailClient({
               <h1 className="text-display-md md:text-display-lg font-heading text-brand-light mb-4 mt-6 tracking-tight">
                 {name}
               </h1>
-              <p className="text-body-lg text-brand-muted max-w-3xl leading-relaxed">
+              <p className="text-body-lg text-brand-light/60 max-w-3xl leading-relaxed">
                 {description}
               </p>
             </FadeUp>
@@ -87,7 +86,7 @@ export default function ServiceDetailClient({
                 <h2 className="text-heading-md font-heading text-brand-light mb-4">
                   {t.services.serviceDetails}
                 </h2>
-                <p className="text-body-md text-brand-muted mb-8 leading-relaxed">
+                <p className="text-body-md text-brand-light/60 mb-8 leading-relaxed">
                   {t.services.detailIntro
                     .replace("{name}", company.name)
                     .replace("{service}", name.toLowerCase())}
@@ -132,7 +131,7 @@ export default function ServiceDetailClient({
                 <h3 className="text-heading-sm font-heading text-brand-light mb-4 border-b border-glass-border pb-4">
                   {t.services.needThisService}
                 </h3>
-                <p className="text-body-sm text-brand-muted mb-6 leading-relaxed">
+                <p className="text-body-sm text-brand-light/60 mb-6 leading-relaxed">
                   {t.services.sidebarBody}
                 </p>
                 
@@ -142,7 +141,7 @@ export default function ServiceDetailClient({
                   </Button>
                   
                   <div className="mt-4 pt-4 border-t border-glass-border flex flex-col gap-2">
-                    <p className="text-label uppercase tracking-wider text-brand-muted">
+                    <p className="text-label uppercase tracking-wider text-brand-light/60">
                       {t.services.callUsDirectly}
                     </p>
                     <a

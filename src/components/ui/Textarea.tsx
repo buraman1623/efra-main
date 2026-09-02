@@ -16,7 +16,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-xs font-semibold uppercase tracking-wider text-brand-muted"
+            className="block text-xs font-semibold uppercase tracking-wider text-brand-light/60"
           >
             {label}
           </label>
@@ -26,7 +26,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           id={inputId}
           className={cn(
             "min-h-[120px] w-full rounded-brand-md border border-glass-border bg-black/50 px-4 py-3",
-            "text-sm font-medium text-white placeholder:text-brand-muted/50 shadow-inner",
+            "text-sm font-medium text-white placeholder:text-brand-light/60/50 shadow-inner",
             "transition-colors duration-200 resize-y",
             "focus:border-brand-amber focus:outline-none focus:ring-1 focus:ring-brand-amber hover:border-white/20",
             error && "border-red-500/80 focus:border-red-500 focus:ring-red-500",
@@ -44,7 +44,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           </p>
         )}
         {hint && !error && (
-          <p id={`${inputId}-hint`} className="text-xs text-brand-muted/70">
+          <p id={`${inputId}-hint`} className="text-xs text-brand-light/60">
             {hint}
           </p>
         )}

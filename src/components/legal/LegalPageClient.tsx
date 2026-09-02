@@ -88,7 +88,7 @@ export function LegalPageClient({
                 <div className="space-y-4 text-body-lg text-brand-light/90">
                   <p>{fill(intro)}</p>
                   {introNote && (
-                    <p className="text-body-sm text-brand-muted">{fill(introNote)}</p>
+                    <p className="text-body-sm text-brand-light/60">{fill(introNote)}</p>
                   )}
                 </div>
 
@@ -100,7 +100,7 @@ export function LegalPageClient({
                       {section.heading}
                     </h2>
                     {section.body && (
-                      <p className="text-body-sm text-brand-muted">{fill(section.body)}</p>
+                      <p className="text-body-sm text-brand-light/60">{fill(section.body)}</p>
                     )}
                     {section.listIntro && (
                       <p className="text-body-sm font-semibold text-brand-light mt-2">
@@ -108,14 +108,14 @@ export function LegalPageClient({
                       </p>
                     )}
                     {section.list && (
-                      <ul className="list-disc list-inside space-y-2 text-body-sm text-brand-muted pl-2">
+                      <ul className="list-disc list-inside space-y-2 text-body-sm text-brand-light/60 pl-2">
                         {section.list.map((item, j) => (
                           <li key={j}>{fill(item)}</li>
                         ))}
                       </ul>
                     )}
                     {section.bodyExtra && (
-                      <p className="text-body-sm text-brand-muted">{fill(section.bodyExtra)}</p>
+                      <p className="text-body-sm text-brand-light/60">{fill(section.bodyExtra)}</p>
                     )}
                   </div>
                 ))}

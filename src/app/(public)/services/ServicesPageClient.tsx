@@ -28,14 +28,13 @@ export default function ServicesPageClient() {
         <section className="relative overflow-hidden min-h-[40vh] flex items-center justify-center pt-36 sm:pt-40 md:pt-48 pb-16">
           <div className="absolute inset-0 z-0">
             <Image
-              src={images.hero.about}
+              src={images.hero.services}
               alt="Efra Business Group Facility"
               fill
-              className="object-cover opacity-40 scale-105"
+              className="object-cover opacity-75 scale-105"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
-            <div className="absolute inset-0 shadow-[inset_0_0_160px_70px_rgba(0,0,0,0.6)]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black" />
           </div>
           
           <div className="container-brand relative z-10 flex flex-col items-center text-center">
@@ -109,7 +108,7 @@ export default function ServicesPageClient() {
                         {name}
                       </h2>
 
-                      <p className="text-body-lg text-brand-muted leading-relaxed">
+                      <p className="text-body-lg text-brand-light/60 leading-relaxed">
                         {description}
                       </p>
 
@@ -153,7 +152,7 @@ export default function ServicesPageClient() {
               <h2 className="text-heading-lg font-heading text-brand-light mb-4">
                 {t.services.ctaTitle}
               </h2>
-              <p className="text-body-md text-brand-muted mb-8 max-w-lg leading-relaxed">
+              <p className="text-body-md text-brand-light/60 mb-8 max-w-lg leading-relaxed">
                 {t.services.ctaSubtitle}
               </p>
               <Button asChild size="lg" variant="primary" className="rounded-full">

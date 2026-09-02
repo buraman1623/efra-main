@@ -76,7 +76,7 @@ export default function AboutPageClient() {
                   </div>
                   <h3 className="text-heading-md font-heading text-brand-light mb-3">{t.about.ourMission}</h3>
                   <p className="text-body-md text-brand-light/65 leading-relaxed">
-                    {company.mission}
+                    {t.home.mission}
                   </p>
                 </div>
               </SlideInRight>
@@ -97,7 +97,7 @@ export default function AboutPageClient() {
                   </div>
                   <h3 className="text-heading-md font-heading text-brand-light mb-3">{t.about.ourVision}</h3>
                   <p className="text-body-md text-brand-light/65 leading-relaxed">
-                    {company.vision}
+                    {t.home.vision}
                   </p>
                 </div>
               </SlideInRight>
@@ -111,7 +111,7 @@ export default function AboutPageClient() {
             <FadeUp className="text-center mb-16">
               <span className="text-label text-brand-amber uppercase tracking-widest block mb-2">{t.about.operationalExcellence}</span>
               <h2 className="text-heading-lg font-heading text-brand-light mb-4">{t.about.coreValuesTitle}</h2>
-              <p className="text-body-lg text-brand-muted max-w-2xl mx-auto">
+              <p className="text-body-lg text-brand-light/60 max-w-2xl mx-auto">
                 {t.about.coreValuesSubtitle}
               </p>
             </FadeUp>
@@ -125,7 +125,7 @@ export default function AboutPageClient() {
                     </svg>
                   </div>
                   <h4 className="text-heading-sm font-heading mb-2 text-brand-light">{usp.title}</h4>
-                  <p className="text-body-sm text-brand-muted leading-relaxed">{usp.description}</p>
+                  <p className="text-body-sm text-brand-light/60 leading-relaxed">{usp.description}</p>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -156,7 +156,7 @@ export default function AboutPageClient() {
                   <h2 className="text-heading-lg font-heading text-brand-light">{t.about.assemblyTitle}</h2>
                 </div>
 
-                <p className="text-body-md text-brand-muted leading-relaxed">
+                <p className="text-body-md text-brand-light/60 leading-relaxed">
                   {t.about.assemblyBody}
                 </p>
                 

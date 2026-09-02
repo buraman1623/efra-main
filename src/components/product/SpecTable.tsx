@@ -15,7 +15,7 @@ export function SpecTable({ specs }: SpecTableProps) {
 
   if (specEntries.length === 0) {
     return (
-      <div className="p-6 glass-panel border border-glass-border rounded-brand-md text-brand-muted text-center text-body-sm">
+      <div className="p-6 glass-panel border border-glass-border rounded-brand-md text-brand-light/60 text-center text-body-sm">
         {t.products.specsNotAvailable}
       </div>
     );

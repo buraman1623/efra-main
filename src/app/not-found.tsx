@@ -32,7 +32,7 @@ export default function NotFound() {
               {t.notFound.title}
             </h2>
 
-            <p className="text-body-sm text-brand-muted max-w-md mx-auto mb-8 leading-relaxed">
+            <p className="text-body-sm text-brand-light/60 max-w-md mx-auto mb-8 leading-relaxed">
               {t.notFound.description}
             </p>
 

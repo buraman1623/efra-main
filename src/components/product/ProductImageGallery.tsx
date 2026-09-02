@@ -98,7 +98,7 @@ export function ProductImageGallery({
               d="M9 10a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1h-4a1 1 0 01-1-1v-4z"
             />
           </svg>
-          <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-muted">
+          <span className="mt-0.5 text-[10px] font-semibold uppercase tracking-wide text-brand-light/60">
             3D
           </span>
         </button>

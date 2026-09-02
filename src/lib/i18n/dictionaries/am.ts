@@ -33,7 +33,6 @@ const am: Dictionary = {
     equipmentProcurement: "የመሳሪያ ግዢ",
     login: "ግባ",
     myWatchlist: "የእኔ ዝርዝር",
-    adminPanel: "የአስተዳዳሪ ገጽ",
     signOut: "ውጣ",
     toggleMenu: "ምናሌ ቀያይር",
     userMenu: "የተጠቃሚ ምናሌ",
@@ -61,9 +60,11 @@ const am: Dictionary = {
     cookiePolicy: "የኩኪ ፖሊሲ",
     sitemap: "የገጽ ካርታ",
     allRightsReserved: "ሁሉም መብቶች የተጠበቁ ናቸው።",
+    address: "አንፎ 105 አደባባይ፣ መልካ ኖኖ ወረዳ፣ መልካ ገፈርሳ ክፍለ ከተማ፣ ሽገር ከተማ፣ ኦሮሚያ፣ ኢትዮጵያ",
   },
 
   home: {
+    heroSlug: "ከባድ መሣሪያዎች እና የኢንዱስትሪ ማሽነሪዎች",
     heroTitlePrefix: "ኢትዮጵያን የሚያንቀሳቅስ",
     heroTitleMid: "ዋና",
     heroTitleSuffix: "የኢንዱስትሪ ኃይል",
@@ -98,6 +99,8 @@ const am: Dictionary = {
     ctaSubtitle:
       "ዝርዝር መግለጫዎችን፣ ልዩ መፍትሄዎችን እና አፋጣኝ ዋጋዎችን ለማግኘት ከምህንድስና ቡድናችን ጋር ይገናኙ።",
     contactSupport: "ድጋፍን ያግኙ",
+    mission: "የተበጁና ከፍተኛ ብቃት ያላቸውን ማሽነሪዎች፣ አስተማማኝ የአገር ውስጥ ኢንጂነሪንግ እንዲሁም የአጋሮቻችንን እውነተኛ የሥራ ላይ ፈተናዎች የሚፈታ ልዩ የድህረ-ሽያጭ ድጋፍ በማቅረብ የኢትዮጵያን የማዕድንና የግብርና ዘርፎች ማበልጸግ።",
+    vision: "በስልታዊ ዓለም አቀፋዊና አገር በቀል አጋርነቶች አማካኝነት የአገር ውስጥ ምርትን በማሳደግ፣ የገቢ ዕቃዎች ጥገኝነትን በመቀነስ እና የቀጠናውን መሠረታዊ ኢንዱስትሪዎች በማዘመን የምስራቅ አፍሪካ ግንባር ቀደም የኢንዱስትሪ ማሽነሪዎች አጋር በመሆን የታወቀ ድርጅት መሆን።",
   },
 
   about: {
@@ -250,9 +253,9 @@ const am: Dictionary = {
     monFri: "ሰኞ - አርብ",
     saturday: "ቅዳሜ",
     sunday: "እሁድ",
-    closed: "ዝግ",
-    hoursWeekday: "ከጠዋቱ 8:00 - ከቀኑ 5:00",
-    hoursSaturday: "ከጠዋቱ 9:00 - ከቀኑ 1:00",
+    closed: "ዝግ ነው",
+    hoursWeekday: "ከጠዋቱ 2:00 - ከቀኑ 11:00",
+    hoursSaturday: "ከጠዋቱ 3:00 - ከቀኑ 7:00",
     technicalRequirements: "ቴክኒካዊ መስፈርቶች",
     sendAMessage: "መልእክት ላክ",
     findUs: "ያግኙን",
@@ -348,7 +351,7 @@ const am: Dictionary = {
   },
 
   legal: {
-    lastUpdated: "መጨረሻ የተዘመነው፡ ሐምሌ 2026",
+    lastUpdated: "መጨረሻ የተዘመነው፡ ሐምሌ 2018",
     terms: {
       titlePrefix: "የአገልግሎት",
       titleSuffix: "ውሎች",

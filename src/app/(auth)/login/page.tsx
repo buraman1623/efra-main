@@ -60,7 +60,7 @@ function LoginForm() {
             <h1 className="font-heading text-display-xs text-brand-light">
               {t.login.welcomeBack}
             </h1>
-            <p className="mt-3 text-body-sm text-brand-muted leading-relaxed">
+            <p className="mt-3 text-body-sm text-brand-light/60 leading-relaxed">
               {t.login.subtitle}
             </p>
           </div>
@@ -99,7 +99,7 @@ function LoginForm() {
             </span>
           </Button>
 
-          <p className="mt-8 text-center text-xs text-brand-muted/60">
+          <p className="mt-8 text-center text-xs text-brand-light/60/60">
             {t.login.privacyNote}
           </p>
         </div>

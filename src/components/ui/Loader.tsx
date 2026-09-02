@@ -40,7 +40,7 @@ export function PageLoader() {
   return (
     <div className="flex min-h-[50vh] flex-col items-center justify-center gap-4">
       <Loader size="lg" label={t.common.loadingPage} />
-      <p className="text-xs font-semibold uppercase tracking-widest text-brand-muted/70 animate-pulse">
+      <p className="text-xs font-semibold uppercase tracking-widest text-brand-light/60 animate-pulse">
         {t.common.loadingEllipsis}
       </p>
     </div>
@@ -50,9 +50,9 @@ export function PageLoader() {
 export function InlineLoader({ label }: { label?: string }) {
   const { t } = useLocale();
   return (
-    <div className="inline-flex items-center gap-2.5 text-brand-muted">
+    <div className="inline-flex items-center gap-2.5 text-brand-light/60">
       <Loader size="sm" label={label ?? t.common.loading} />
-      {label && <span className="text-xs font-medium text-brand-muted">{label}</span>}
+      {label && <span className="text-xs font-medium text-brand-light/60">{label}</span>}
     </div>
   );
 }

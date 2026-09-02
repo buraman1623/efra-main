@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
-import { Inter, Montserrat } from "next/font/google";
+import { Inter, Montserrat, Noto_Sans_Ethiopic } from "next/font/google";
 import { seoDefaults } from "@/lib/content/company";
 import { MotionProvider } from "@/components/ui/MotionProvider";
 import { LocaleProvider } from "@/lib/i18n/LocaleProvider";
@@ -17,6 +17,14 @@ const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
+});
+
+//load Amharic font
+const notoAmharic = Noto_Sans_Ethiopic({
+  subsets: ["ethiopic"],
+  variable: "--font-amharic",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -67,7 +75,7 @@ export default async function RootLayout({
   return (
     <html
       lang={initialLocale}
-      className={`${montserrat.variable} ${inter.variable}`}
+      className={`${montserrat.variable} ${inter.variable} ${notoAmharic.variable}`}
     >
       <body className="min-h-screen antialiased">
         <LocaleProvider initialLocale={initialLocale}>

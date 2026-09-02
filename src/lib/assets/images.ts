@@ -12,8 +12,9 @@ export const images = {
     home: `/Images/home 1.jpg`,
     about: `/Images/about 1.png`,
     products: `/Images/product 1.png`,
-    services: unsplash("photo-1581092918056-0c4c3acd3789", 1600),
-    contact: unsplash("photo-1486406146926-c627a92ad1ab", 1600),
+    services: `/Images/service 1.png`,
+    service_detail: `/Images/service detail.png`,
+    contact: `/Images/contact 1.jpg`,
   },
 
   categories: {

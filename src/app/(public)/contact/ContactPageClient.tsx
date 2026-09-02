@@ -33,14 +33,13 @@ export default function ContactPageClient({
         <section className="relative overflow-hidden min-h-[40vh] flex items-center justify-center pt-36 sm:pt-40 md:pt-48 pb-16">
           <div className="absolute inset-0 z-0">
             <Image
-              src={images.hero.home}
+              src={images.hero.contact}
               alt="Efra Business Group Infrastructure"
               fill
-              className="object-cover opacity-30 scale-105"
+              className="object-cover opacity-75 scale-105"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black" />
-            <div className="absolute inset-0 shadow-[inset_0_0_160px_70px_rgba(0,0,0,0.6)]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black" />
           </div>
 
           <div className="container-brand relative z-10 text-center">
@@ -74,17 +73,17 @@ export default function ContactPageClient({
                   {t.contact.headquarters}
                 </h3>
                 
-                <div className="flex items-start gap-4 text-brand-muted mb-6">
+                <div className="flex items-start gap-4 text-brand-light/60 mb-6">
                   <div className="w-10 h-10 bg-brand-secondary/20 rounded-full flex items-center justify-center shrink-0 text-brand-amber">
                     📍
                   </div>
                   <div>
                     <h4 className="font-semibold text-brand-light mb-1">{t.contact.address}</h4>
-                    <p className="text-body-sm leading-relaxed">{company.headOffice}</p>
+                    <p className="text-body-sm leading-relaxed">{t.footer.address}</p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 text-brand-muted mb-6">
+                <div className="flex items-start gap-4 text-brand-light/60 mb-6">
                   <div className="w-10 h-10 bg-brand-secondary/20 rounded-full flex items-center justify-center shrink-0 text-brand-amber">
                     📞
                   </div>
@@ -94,7 +93,7 @@ export default function ContactPageClient({
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 text-brand-muted mb-6">
+                <div className="flex items-start gap-4 text-brand-light/60 mb-6">
                   <div className="w-10 h-10 bg-brand-secondary/20 rounded-full flex items-center justify-center shrink-0 text-brand-amber">
                     📱
                   </div>
@@ -104,7 +103,7 @@ export default function ContactPageClient({
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4 text-brand-muted">
+                <div className="flex items-start gap-4 text-brand-light/60">
                   <div className="w-10 h-10 bg-brand-secondary/20 rounded-full flex items-center justify-center shrink-0 text-brand-amber">
                     💬 
                   </div>
@@ -122,7 +121,7 @@ export default function ContactPageClient({
                 <h3 className="text-heading-sm font-heading text-brand-light mb-4 border-b border-glass-border pb-3">
                   {t.contact.businessHours}
                 </h3>
-                <ul className="flex flex-col gap-3 text-body-sm text-brand-muted">
+                <ul className="flex flex-col gap-3 text-body-sm text-brand-light/60">
                   <li className="flex justify-between">
                     <span>{t.contact.monFri}</span>
                     <span className="font-medium text-brand-light">{t.contact.hoursWeekday}</span>
@@ -165,7 +164,7 @@ export default function ContactPageClient({
                 <div className="px-8 pt-8 pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-glass-border">
                   <div>
                     <h3 className="text-heading-sm font-heading text-brand-light">{t.contact.findUs}</h3>
-                    <p className="mt-1 text-body-sm text-brand-muted">
+                    <p className="mt-1 text-body-sm text-brand-light/60">
                       {t.contact.findUsSubtitle}
                     </p>
                   </div>

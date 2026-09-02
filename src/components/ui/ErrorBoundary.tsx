@@ -40,7 +40,7 @@ function DefaultErrorFallback({ onRetry }: { onRetry: () => void }) {
           {t.common.somethingWentWrong}
         </h2>
 
-        <p className="mt-2 text-xs font-medium text-brand-muted leading-relaxed">
+        <p className="mt-2 text-xs font-medium text-brand-light/60 leading-relaxed">
           {t.common.somethingWentWrongDesc}
         </p>
 

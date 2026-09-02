@@ -40,11 +40,11 @@ export function ProductCard({ product, categorySlug }: ProductCardProps) {
       
       <div className="p-6 flex flex-col flex-1">
         <div className="text-label text-brand-secondary mb-2">{product.model_number}</div>
-        <h3 className="text-heading-sm font-heading text-[var(--color-text)] mb-3 line-clamp-2">
+        <h3 className="text-heading-sm font-heading text-brand-light mb-3 line-clamp-2">
           {name}
         </h3>
         
-        <p className="text-body-sm text-brand-muted mb-6 line-clamp-3 flex-1">
+        <p className="text-body-sm text-brand-light/60 mb-6 line-clamp-3 flex-1">
           {description}
         </p>
         

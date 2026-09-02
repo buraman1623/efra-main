@@ -31,7 +31,6 @@ export function Footer() {
       { label: t.footer.privacyPolicy, href: "/privacy" },
       { label: t.footer.termsConditions, href: "/terms" },
       { label: t.footer.cookiePolicy, href: "/cookies" },
-      { label: t.footer.sitemap, href: "/sitemap" },
     ],
   };
 
@@ -50,15 +49,15 @@ export function Footer() {
                 Efra Business Group
               </span>
             </Link>
-            <p className="text-brand-muted text-body-sm leading-relaxed max-w-sm">
+            <p className="text-brand-light/60 text-body-sm leading-relaxed max-w-sm">
               {t.footer.tagline}
             </p>
-            <div className="flex flex-col gap-2 text-body-sm text-brand-muted mt-2">
+            <div className="flex flex-col gap-2 text-body-sm text-brand-light/60 mt-2">
               <p className="flex items-start gap-2">
                 <span className="text-brand-amber mt-1">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4"><path fillRule="evenodd" d="M9.69 18.933l.003.001C9.89 19.02 10 19 10 19s.11.02.308-.066l.002-.001.006-.003.018-.008a5.741 5.741 0 00.281-.14c.186-.096.446-.24.757-.433.62-.384 1.445-.966 2.274-1.765C15.302 14.988 17 12.493 17 9A7 7 0 103 9c0 3.492 1.698 5.988 3.355 7.584a13.731 13.731 0 002.273 1.765 11.842 11.842 0 00.976.544l.062.029.018.008.006.003zM10 11.25a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z" clipRule="evenodd" /></svg>
                 </span>
-                {company.headOffice}
+                {t.footer.address}
               </p>
               <p className="flex items-center gap-2">
                 <span className="text-brand-amber">
@@ -89,7 +88,7 @@ export function Footer() {
             <ul className="flex flex-col gap-3">
               {footerNavigation.products.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-brand-muted hover:text-brand-amber transition-colors text-body-sm">
+                  <Link href={item.href} className="text-brand-light/60 hover:text-brand-amber transition-colors text-body-sm">
                     {item.label}
                   </Link>
                 </li>
@@ -102,7 +101,7 @@ export function Footer() {
             <ul className="flex flex-col gap-3">
               {footerNavigation.services.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-brand-muted hover:text-brand-amber transition-colors text-body-sm">
+                  <Link href={item.href} className="text-brand-light/60 hover:text-brand-amber transition-colors text-body-sm">
                     {item.label}
                   </Link>
                 </li>
@@ -115,7 +114,7 @@ export function Footer() {
             <ul className="flex flex-col gap-3">
               {footerNavigation.company.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-brand-muted hover:text-brand-amber transition-colors text-body-sm">
+                  <Link href={item.href} className="text-brand-light/60 hover:text-brand-amber transition-colors text-body-sm">
                     {item.label}
                   </Link>
                 </li>
@@ -126,12 +125,12 @@ export function Footer() {
 
         {/* Bottom Footer */}
         <div className="border-t border-brand-border/30 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-brand-muted text-xs">
+          <p className="text-brand-light/60 text-xs">
             © {currentYear} {company.legalName}. {t.footer.allRightsReserved}
           </p>
           <div className="flex items-center gap-6">
             {footerNavigation.legal.map((item) => (
-              <Link key={item.href} href={item.href} className="text-brand-muted hover:text-brand-amber transition-colors text-xs">
+              <Link key={item.href} href={item.href} className="text-brand-light/60 hover:text-brand-amber transition-colors text-xs">
                 {item.label}
               </Link>
             ))}

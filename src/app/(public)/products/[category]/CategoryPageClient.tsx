@@ -49,11 +49,10 @@ export default function CategoryPageClient({
               src={category.image_url || getCategoryImage(category.slug) || images.hero.home}
               alt={name}
               fill
-              className="object-cover opacity-25 scale-105"
+              className="object-cover opacity-75 scale-105"
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/60 to-black" />
-            <div className="absolute inset-0 shadow-[inset_0_0_160px_70px_rgba(0,0,0,0.6)]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/60 to-black" />
           </div>
 
           <div className="container-brand relative z-10 text-center">
@@ -82,7 +81,7 @@ export default function CategoryPageClient({
                 <h3 className="text-heading-sm font-heading text-brand-light mb-2">
                   {t.products.noProductsTitle}
                 </h3>
-                <p className="text-body-sm text-brand-muted leading-relaxed">
+                <p className="text-body-sm text-brand-light/60 leading-relaxed">
                   {t.products.noProductsDesc}
                 </p>
               </div>

@@ -26,7 +26,7 @@ export function statusBadgeClass(status: string) {
     case "closed":
       return "bg-green-500/20 text-green-400";
     default:
-      return "bg-white/10 text-brand-muted";
+      return "bg-white/10 text-brand-light/60";
   }
 }
 

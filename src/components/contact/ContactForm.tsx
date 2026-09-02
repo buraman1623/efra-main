@@ -63,7 +63,7 @@ export function ContactForm() {
         <h3 className="text-lg font-semibold text-white">
           {t.forms.messageSentTitle}
         </h3>
-        <p className="mt-2 text-sm text-brand-muted">
+        <p className="mt-2 text-sm text-brand-light/60">
           {t.forms.messageSentDesc}
         </p>
         <Button
@@ -85,7 +85,7 @@ export function ContactForm() {
           label={t.forms.fullName}
           placeholder={t.forms.fullNamePlaceholder}
           error={errors.full_name?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm"
           {...register("full_name")}
         />
         <Input
@@ -93,7 +93,7 @@ export function ContactForm() {
           type="email"
           placeholder={t.forms.emailPlaceholder}
           error={errors.email?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm"
           {...register("email")}
         />
       </div>
@@ -104,14 +104,14 @@ export function ContactForm() {
           type="tel"
           placeholder={t.forms.phonePlaceholder}
           error={errors.phone?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm font-mono"
           {...register("phone")}
         />
         <Input
           label={t.forms.subject}
           placeholder={t.forms.subjectPlaceholder}
           error={errors.subject?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm"
           {...register("subject")}
         />
       </div>
@@ -121,7 +121,7 @@ export function ContactForm() {
         placeholder={t.forms.messagePlaceholder}
         rows={5}
         error={errors.message?.message}
-        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm leading-relaxed"
+        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm leading-relaxed"
         {...register("message")}
       />
 
@@ -140,7 +140,7 @@ export function ContactForm() {
           {t.forms.sendMessage}
         </Button>
 
-        <p className="text-xs text-brand-muted/70">
+        <p className="text-xs text-brand-light/60/70">
           {t.forms.privacyNote}
         </p>
       </div>

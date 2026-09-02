@@ -147,7 +147,7 @@ export function Header() {
                         <Link
                           key={child.href}
                           href={child.href}
-                          className="text-body-md text-brand-muted hover:text-brand-amber"
+                          className="text-body-md text-brand-light/80 hover:text-brand-amber"
                         >
                           {child.label}
                         </Link>

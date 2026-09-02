@@ -7,7 +7,7 @@ import { FadeUp, StaggerContainer, StaggerItem, SlideInRight } from "@/component
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { images } from "@/lib/assets/images";
-import { company, services } from "@/lib/content/company";
+import { services } from "@/lib/content/company";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 export default function HomePage() {
@@ -46,7 +46,7 @@ export default function HomePage() {
           <FadeUp delay={0.1}>
             <span className="inline-flex items-center gap-2 py-2 px-5 rounded-full glass-panel text-label uppercase tracking-widest mb-8">
               <span className="w-1.5 h-1.5 rounded-full bg-brand-amber animate-pulse-dot" />
-              {company.industry}
+              {t.home.heroSlug}
             </span>
           </FadeUp>
 
@@ -57,8 +57,8 @@ export default function HomePage() {
           </FadeUp>
 
           <FadeUp delay={0.3}>
-            <p className="text-body-lg text-brand-light/45 max-w-2xl mb-10 leading-relaxed">
-              {company.mission}
+            <p className="text-body-lg text-brand-light/60 max-w-2xl mb-10 leading-relaxed">
+              {t.home.mission}
             </p>
           </FadeUp>
 
@@ -75,15 +75,15 @@ export default function HomePage() {
             <div className="glass-panel rounded-full flex divide-x divide-glass-border overflow-hidden">
               <div className="flex-1 py-5 px-4">
                 <div className="text-heading-md font-heading bg-gradient-signal bg-clip-text text-transparent">10+</div>
-                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">{t.home.statYearsExp}</div>
+                <div className="text-label text-brand-light/60 uppercase tracking-wider mt-1">{t.home.statYearsExp}</div>
               </div>
               <div className="flex-1 py-5 px-4">
                 <div className="text-heading-md font-heading bg-gradient-signal bg-clip-text text-transparent">13+</div>
-                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">{t.home.statMachineModels}</div>
+                <div className="text-label text-brand-light/60 uppercase tracking-wider mt-1">{t.home.statMachineModels}</div>
               </div>
               <div className="flex-1 py-5 px-4">
                 <div className="text-heading-md font-heading bg-gradient-signal bg-clip-text text-transparent">100%</div>
-                <div className="text-label text-brand-muted uppercase tracking-wider mt-1">{t.home.statNationwide}</div>
+                <div className="text-label text-brand-light/60 uppercase tracking-wider mt-1">{t.home.statNationwide}</div>
               </div>
             </div>
           </FadeUp>
@@ -95,7 +95,7 @@ export default function HomePage() {
         <div className="container-brand">
           <FadeUp className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <h2 className="text-heading-lg font-heading text-brand-light">{t.home.provenTitle}</h2>
-            <p className="text-body-sm text-brand-muted max-w-xs">{t.home.provenSubtitle}</p>
+            <p className="text-body-sm text-brand-light/60 max-w-xs">{t.home.provenSubtitle}</p>
           </FadeUp>
 
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-5 md:h-[480px]">
@@ -136,7 +136,7 @@ export default function HomePage() {
           <FadeUp>
             <div className="text-center mb-16">
               <h2 className="text-heading-lg font-heading text-brand-light mb-4">{t.home.solutionsTitle}</h2>
-              <p className="text-body-lg text-brand-muted max-w-2xl mx-auto">
+              <p className="text-body-lg text-brand-light/60 max-w-2xl mx-auto">
                 {t.home.solutionsSubtitle}
               </p>
             </div>
@@ -181,8 +181,8 @@ export default function HomePage() {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <SlideInRight className="flex flex-col gap-6">
               <h2 className="text-heading-lg font-heading text-white">{t.home.whyPartner}</h2>
-              <p className="text-body-lg text-brand-muted">
-                {company.vision}
+              <p className="text-body-lg text-brand-light/60">
+                {t.home.vision}
               </p>
               <Button asChild variant="outline" className="w-fit mt-4 rounded-full">
                 <Link href="/about">{t.home.learnOurStory}</Link>
@@ -198,7 +198,7 @@ export default function HomePage() {
                     </svg>
                   </div>
                   <h4 className="text-heading-sm font-heading mb-2 text-brand-light">{usp.title}</h4>
-                  <p className="text-body-sm text-brand-muted">{usp.description}</p>
+                  <p className="text-body-sm text-brand-light/60">{usp.description}</p>
                 </StaggerItem>
               ))}
             </StaggerContainer>
@@ -212,7 +212,7 @@ export default function HomePage() {
           <FadeUp>
             <div className="text-center mb-16">
               <h2 className="text-heading-lg font-heading text-brand-light mb-4">{t.home.supportTitle}</h2>
-              <p className="text-body-lg text-brand-muted max-w-2xl mx-auto">
+              <p className="text-body-lg text-brand-light/60 max-w-2xl mx-auto">
                 {t.home.supportSubtitle}
               </p>
             </div>
@@ -227,7 +227,7 @@ export default function HomePage() {
                     <span className="text-2xl">⚙️</span>
                   </div>
                   <h3 className="text-heading-sm font-heading text-brand-light mb-3">{translated?.name ?? srv.name}</h3>
-                  <p className="text-body-sm text-brand-muted mb-6">{translated?.description ?? srv.description}</p>
+                  <p className="text-body-sm text-brand-light/60 mb-6">{translated?.description ?? srv.description}</p>
                   <Link href={`/services/${srv.slug}`} className="inline-flex items-center gap-2 text-brand-amber font-semibold hover:text-brand-secondary transition-colors">
                     {t.common.learnMore}
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
@@ -253,7 +253,7 @@ export default function HomePage() {
               <h2 className="text-heading-lg md:text-display-sm font-heading text-brand-light mb-4">
                 {t.home.ctaTitle}
               </h2>
-              <p className="text-body-lg text-brand-muted mb-8 max-w-xl">
+              <p className="text-body-lg text-brand-light/60 mb-8 max-w-xl">
                 {t.home.ctaSubtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">

@@ -88,7 +88,7 @@ export default function WatchlistPageClient({
                   <h2 className="text-heading-md font-heading text-brand-light mb-3">
                     {t.watchlist.emptyTitle}
                   </h2>
-                  <p className="text-body-sm text-brand-muted mb-8 leading-relaxed">
+                  <p className="text-body-sm text-brand-light/60 mb-8 leading-relaxed">
                     {t.watchlist.emptyDesc}
                   </p>
 

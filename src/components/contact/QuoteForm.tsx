@@ -7,12 +7,18 @@ import {
   createQuoteRequestSchema,
   type QuoteRequestFormData,
 } from "@/lib/validation/schemas";
+import { createClient } from "@/lib/supabase/client";
 import { Button, Input, Textarea } from "@/components/ui";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
 
 interface QuoteFormProps {
   defaultProduct?: string;
   productId?: string;
+}
+
+function emptyToNull(value?: string) {
+  const trimmed = value?.trim();
+  return trimmed ? trimmed : null;
 }
 
 export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
@@ -36,27 +42,27 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
 
   async function onSubmit(data: QuoteRequestFormData) {
     setSubmitError(null);
+    const supabase = createClient();
 
-    const res = await fetch("/api/quote", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { error } = await supabase.from("quote_requests").insert({
+      full_name: data.full_name.trim(),
+      company: emptyToNull(data.company),
+      email: data.email.trim(),
+      phone: data.phone.trim(),
+      whatsapp: emptyToNull(data.whatsapp),
+      product_interest: emptyToNull(data.product_interest),
+      product_id: emptyToNull(data.product_id),
+      message: emptyToNull(data.message),
+      user_id: user?.id ?? null,
     });
 
-    if (!res.ok) {
-      const bodyText = await res.text();
-      console.error("Quote request submission failed:", bodyText);
-      // The server only includes `detail` outside production, so this
-      // safely shows just the generic message to real site visitors.
-      let detail = "";
-      try {
-        detail = JSON.parse(bodyText)?.detail ?? "";
-      } catch {
-        // ignore, bodyText wasn't JSON
-      }
-      setSubmitError(
-        detail ? `${t.forms.quoteErrorGeneric} (${detail})` : t.forms.quoteErrorGeneric
-      );
+    if (error) {
+      console.error("Quote request submission failed:", error);
+      setSubmitError(t.forms.quoteErrorGeneric);
       return;
     }
 
@@ -78,7 +84,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
         <h3 className="text-lg font-semibold text-white">
           {t.forms.quoteReceivedTitle}
         </h3>
-        <p className="mt-2 text-sm text-brand-muted">
+        <p className="mt-2 text-sm text-brand-light/60">
           {t.forms.quoteReceivedDesc}
         </p>
         <Button
@@ -100,14 +106,14 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
           label={t.forms.fullName}
           placeholder={t.forms.fullNamePlaceholder}
           error={errors.full_name?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm"
           {...register("full_name")}
         />
         <Input
           label={t.forms.company}
           placeholder={t.forms.companyPlaceholder}
           error={errors.company?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm"
           {...register("company")}
         />
       </div>
@@ -118,7 +124,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
           type="email"
           placeholder={t.forms.emailPlaceholder}
           error={errors.email?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm"
           {...register("email")}
         />
         <Input
@@ -126,7 +132,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
           type="tel"
           placeholder={t.forms.phonePlaceholder}
           error={errors.phone?.message}
-          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
+          className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm font-mono"
           {...register("phone")}
         />
       </div>
@@ -137,7 +143,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
         placeholder={t.forms.whatsappPlaceholder}
         hint={t.forms.whatsappHint}
         error={errors.whatsapp?.message}
-        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
+        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm font-mono"
         {...register("whatsapp")}
       />
 
@@ -145,7 +151,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
         label={t.forms.machineryOfInterest}
         placeholder={t.forms.machineryOfInterestPlaceholder}
         error={errors.product_interest?.message}
-        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm font-mono"
+        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm font-mono"
         {...register("product_interest")}
       />
 
@@ -156,7 +162,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
         placeholder={t.forms.additionalDetailsPlaceholder}
         rows={4}
         error={errors.message?.message}
-        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-muted/50 text-sm leading-relaxed"
+        className="bg-black/50 border-glass-border focus:border-brand-amber text-white placeholder:text-brand-light/60/50 text-sm leading-relaxed"
         {...register("message")}
       />
 
@@ -175,7 +181,7 @@ export function QuoteForm({ defaultProduct, productId }: QuoteFormProps) {
           {t.forms.requestAQuote}
         </Button>
 
-        <p className="text-xs text-brand-muted/70">
+        <p className="text-xs text-brand-light/60/70">
           {t.forms.privacyNote}
         </p>
       </div>

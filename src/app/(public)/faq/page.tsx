@@ -99,7 +99,7 @@ export default function FAQPage() {
                         : "max-h-0 opacity-0"
                     }`}
                   >
-                    <div className="p-6 pt-2 text-body-md text-brand-muted border-t border-glass-border leading-relaxed">
+                    <div className="p-6 pt-2 text-body-md  border-t border-glass-border leading-relaxed">
                       {faq.answer.replace("{name}", company.name)}
                     </div>
                   </div>
@@ -112,7 +112,7 @@ export default function FAQPage() {
                 <h3 className="font-heading text-heading-md text-brand-light mb-2">
                   {t.faq.haveMoreQuestions}
                 </h3>
-                <p className="text-body-sm text-brand-muted mb-6">
+                <p className="text-body-sm  mb-6">
                   {t.faq.cantFindAnswer}
                 </p>
                 <Button

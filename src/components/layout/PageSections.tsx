@@ -15,11 +15,11 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   const { t } = useLocale();
   return (
     <nav aria-label="Breadcrumb" className={cn("py-4", className)}>
-      <ol className="flex flex-wrap items-center gap-2 text-xs font-medium text-brand-muted">
+      <ol className="flex flex-wrap items-center gap-2 text-xs font-medium text-brand-light/60">
         <li>
           <Link
             href="/"
-            className="text-brand-muted transition-colors hover:text-brand-amber"
+            className="text-brand-light/60 transition-colors hover:text-brand-amber"
           >
             {t.breadcrumbs.home}
           </Link>
@@ -30,7 +30,7 @@ export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
             {item.href ? (
               <Link
                 href={item.href}
-                className="text-brand-muted transition-colors hover:text-brand-amber"
+                className="text-brand-light/60 transition-colors hover:text-brand-amber"
               >
                 {item.label}
               </Link>
@@ -54,7 +54,7 @@ function ChevronIcon() {
       viewBox="0 0 12 12"
       fill="none"
       aria-hidden="true"
-      className="text-brand-muted/40"
+      className="text-brand-light/60/40"
     >
       <path
         d="M4.5 2.5L7.5 6L4.5 9.5"
@@ -118,7 +118,7 @@ export function PageHero({
           {title}
         </h1>
         {subtitle && (
-          <p className="mt-4 max-w-2xl text-base text-brand-muted/90 sm:text-lg leading-relaxed">
+          <p className="mt-4 max-w-2xl text-base text-brand-light/60/90 sm:text-lg leading-relaxed">
             {subtitle}
           </p>
         )}
@@ -160,7 +160,7 @@ export function SectionHeading({
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-base text-brand-muted leading-relaxed">
+        <p className="mt-4 text-base text-brand-light/60 leading-relaxed">
           {description}
         </p>
       )}

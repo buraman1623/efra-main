@@ -27,11 +27,11 @@ export function Breadcrumbs() {
   return (
     <FadeIn delay={0.1}>
       <nav aria-label="Breadcrumb" className="mb-6">
-        <ol className="flex flex-wrap items-center gap-2 text-xs font-medium text-brand-muted">
+        <ol className="flex flex-wrap items-center gap-2 text-xs font-medium text-brand-light/60">
           <li>
             <Link
               href="/"
-              className="text-brand-muted transition-colors hover:text-brand-amber"
+              className="text-brand-light/60 transition-colors hover:text-brand-amber"
             >
               {t.breadcrumbs.home}
             </Link>
@@ -55,7 +55,7 @@ export function Breadcrumbs() {
                 ) : (
                   <Link
                     href={path}
-                    className="text-brand-muted transition-colors hover:text-brand-amber"
+                    className="text-brand-light/60 transition-colors hover:text-brand-amber"
                   >
                     {label}
                   </Link>
@@ -77,7 +77,7 @@ function ChevronIcon() {
       viewBox="0 0 12 12"
       fill="none"
       aria-hidden="true"
-      className="text-brand-muted/40"
+      className="text-brand-light/60"
     >
       <path
         d="M4.5 2.5L7.5 6L4.5 9.5"

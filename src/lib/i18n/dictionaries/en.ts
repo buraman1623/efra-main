@@ -37,7 +37,6 @@ const en = {
     equipmentProcurement: "Equipment Procurement",
     login: "Login",
     myWatchlist: "My Watchlist",
-    adminPanel: "Admin Panel",
     signOut: "Sign Out",
     toggleMenu: "Toggle menu",
     userMenu: "User menu",
@@ -65,9 +64,11 @@ const en = {
     cookiePolicy: "Cookie Policy",
     sitemap: "Sitemap",
     allRightsReserved: "All rights reserved.",
+    address: "Anfo 105 Square, Melka Nono Woreda, Melka Gefersa Sub-City, Sheger City, Oromia, Ethiopia",
   },
 
   home: {
+    heroSlug: "Heavy Equipment & Industrial Machinery",
     heroTitlePrefix: "Powering",
     heroTitleMid: "Ethiopia's",
     heroTitleSuffix: "Core Industries",
@@ -103,6 +104,8 @@ const en = {
     ctaSubtitle:
       "Get in touch with our engineering team for detailed specifications, custom solutions, and immediate quotes.",
     contactSupport: "Contact Support",
+    mission: "To empower Ethiopia's mining and agricultural sectors by supplying tailored, high-performance machinery, reliable local engineering, and exceptional after-sales support that solves our partners' real operational challenges.",
+    vision: "To become East Africa's leading industrial machinery partner, recognised for driving domestic production, reducing import dependency, and modernising the region's core industries through strategic global and local partnerships.",
   },
 
   about: {
