@@ -33,6 +33,7 @@ const am: Dictionary = {
     equipmentProcurement: "የመሳሪያ ግዢ",
     login: "ግባ",
     myWatchlist: "የእኔ ዝርዝር",
+    adminPanel: "የአስተዳዳሪ ገጽ",
     signOut: "ውጣ",
     toggleMenu: "ምናሌ ቀያይር",
     userMenu: "የተጠቃሚ ምናሌ",

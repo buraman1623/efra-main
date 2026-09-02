@@ -37,6 +37,7 @@ const en = {
     equipmentProcurement: "Equipment Procurement",
     login: "Login",
     myWatchlist: "My Watchlist",
+    adminPanel: "Admin Panel",
     signOut: "Sign Out",
     toggleMenu: "Toggle menu",
     userMenu: "User menu",
