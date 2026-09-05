@@ -5,6 +5,7 @@ import Image from "next/image";
 import { images, getCategoryImage } from "@/lib/assets/images";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { ProductSearchBar } from "@/components/product/ProductSearchBar";
 import {
   FadeUp,
   StaggerContainer,
@@ -19,6 +20,10 @@ export default function ProductsPageClient({
   categories: ProductCategory[];
 }) {
   const { t, locale } = useLocale();
+  // Only show top-level categories here — subcategories (Washing Machines,
+  // Gold Crusher Machines, etc.) are shown one level down, grouped inside
+  // each main category's own page.
+  const mainCategories = categories.filter((c) => !c.parent_id);
 
   return (
     <div className="relative min-h-screen bg-black text-brand-light font-sans selection:bg-brand-amber/30 selection:text-brand-light flex flex-col justify-between">
@@ -32,8 +37,8 @@ export default function ProductsPageClient({
       <div className="relative z-10 flex-1">
         <Header />
 
-        <section className="relative overflow-hidden min-h-[35vh] flex items-center justify-center pt-36 sm:pt-40 md:pt-44 pb-12">
-          <div className="absolute inset-0 z-0">
+        <section className="relative min-h-[35vh] flex items-center justify-center pt-36 sm:pt-40 md:pt-44 pb-12">
+          <div className="absolute inset-0 z-0 overflow-hidden">
             <Image
               src={images.hero.products}
               alt="Efra Machinery & Equipment Catalog"
@@ -52,16 +57,20 @@ export default function ProductsPageClient({
             </FadeUp>
 
             <FadeUp delay={0.2}>
-              <p className="text-body-lg text-brand-light/60 max-w-xl mx-auto leading-relaxed">
+              <p className="text-body-lg text-brand-light/60 max-w-xl mx-auto leading-relaxed mb-8">
                 {t.products.heroSubtitle}
               </p>
+            </FadeUp>
+
+            <FadeUp delay={0.3} className="max-w-xl mx-auto mb-10">
+              <ProductSearchBar />
             </FadeUp>
           </div>
         </section>
 
         <section className="section-brand relative pb-20">
           <div className="container-brand">
-            {categories.length === 0 ? (
+            {mainCategories.length === 0 ? (
               <div className="py-16 text-center max-w-md mx-auto glass-panel border border-glass-border rounded-brand-xl p-8 shadow-2xl">
                 <h3 className="text-heading-sm font-heading text-brand-light mb-2">
                   {t.products.noCategoriesTitle}
@@ -72,7 +81,7 @@ export default function ProductsPageClient({
               </div>
             ) : (
               <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {categories.map((category) => {
+                {mainCategories.map((category) => {
                   const name = pickLocalized(locale, category.name_en, category.name_am);
                   const description = pickLocalized(
                     locale,

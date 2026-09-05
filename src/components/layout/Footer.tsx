@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { company } from "@/lib/content/company";
 import { useLocale } from "@/lib/i18n/LocaleProvider";
+import { label } from "framer-motion/client";
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -31,6 +32,7 @@ export function Footer() {
       { label: t.footer.privacyPolicy, href: "/privacy" },
       { label: t.footer.termsConditions, href: "/terms" },
       { label: t.footer.cookiePolicy, href: "/cookies" },
+      { label: t.footer.sitemap, href: "/sitemap.xml" },
     ],
   };
 

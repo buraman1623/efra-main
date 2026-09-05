@@ -162,6 +162,8 @@ const am: Dictionary = {
     interactive3dPreview: "ተግባራዊ የ3ዲ ቅድመ-እይታ",
     dragToRotate: "ለማዞር ይጎትቱ · ለማጉላት ያሸብልሉ",
     initializing3dCanvas: "የ3ዲ ገጽ በመጀመር ላይ...",
+    searchPlaceholder: "ማሽነሪ በስም ወይም በሞዴል ይፈልጉ...",
+    searchNoResults: "ምንም ማሽነሪ አልተገኘም። እባክዎ ሌላ ስም ወይም የሞዴል ቁጥር ይሞክሩ።",
   },
 
   services: {

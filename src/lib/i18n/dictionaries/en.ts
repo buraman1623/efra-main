@@ -167,6 +167,8 @@ const en = {
     interactive3dPreview: "Interactive 3D Preview",
     dragToRotate: "Drag to rotate · Scroll to zoom",
     initializing3dCanvas: "Initializing 3D Canvas...",
+    searchPlaceholder: "Search machinery by name or model...",
+    searchNoResults: "No machinery found. Try a different name or model number.",
   },
 
   services: {
