@@ -39,12 +39,18 @@ export async function GET(request: Request) {
     getProducts(),
   ]);
 
+  const categoryMap = new Map(categories.map((c) => [c.id, c]));
+
   const results: ProductSearchResult[] = products
     .filter((p) => {
-      const haystack = `${p.name_en} ${p.name_am ?? ""} ${p.model_number}`.toLowerCase();
+      const subcategory = categoryMap.get(p.category_id);
+
+      const subEn = subcategory?.name_en ?? "";
+      const subAm = subcategory?.name_am ?? "";
+
+      const haystack = `${p.name_en} ${p.name_am ?? ""} ${p.model_number} ${subEn} ${subAm}`.toLowerCase();
       return haystack.includes(q);
     })
-    .slice(0, 8)
     .map((p) => {
       const category_slug = topCategorySlug(p.category_id, categories);
       const subcategory = categories.find((c) => c.id === p.category_id);
@@ -63,7 +69,8 @@ export async function GET(request: Request) {
         image_url: p.image_url,
       };
     })
-    .filter((r): r is ProductSearchResult => r !== null);
+    .filter((r): r is ProductSearchResult => r !== null)
+    .slice(0, 8);
 
   return NextResponse.json({ results });
 }
