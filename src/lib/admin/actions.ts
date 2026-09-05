@@ -127,7 +127,7 @@ export async function updateTelegramSettings(
     .update({
       telegram_chat_id: trimmed,
       telegram_notifications_enabled: settings.telegram_notifications_enabled,
-    })
+    } as never)
     .eq("id", targetUserId);
 
   if (error) {

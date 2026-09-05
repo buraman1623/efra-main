@@ -24,11 +24,17 @@ export async function GET() {
     return NextResponse.json({ error: "Not authenticated." }, { status: 401 });
   }
 
-  const { data: profile } = await supabase
+  type ProfileType = {
+    role: "user" | "admin";
+    telegram_chat_id: string | null;
+    telegram_notifications_enabled: boolean;
+  };
+
+  const { data: profile } = (await supabase
     .from("profiles")
     .select("role, telegram_chat_id, telegram_notifications_enabled")
     .eq("id", user.id)
-    .single();
+    .single()) as { data: ProfileType | null };
 
   if (profile?.role !== "admin") {
     return NextResponse.json({ error: "Admins only." }, { status: 403 });
@@ -59,8 +65,7 @@ export async function GET() {
   }
 
   const { configured, results } = await sendTelegramMessageWithResults(
-    `🧪 <b>Test notification</b>\n\nIf you're reading this in Telegram, your notification setup is wired up correctly.`,
-    [profile.telegram_chat_id]
+    `🧪 <b>Test notification</b>\n\nIf you're reading this in Telegram, your notification setup is wired up correctly.`
   );
 
   return NextResponse.json({
