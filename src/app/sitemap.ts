@@ -1,7 +1,8 @@
 import { MetadataRoute } from "next";
 import { seoDefaults, services } from "@/lib/content/company";
+import { getCategories, getAllProductPaths } from "@/lib/data/catalog";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = seoDefaults.siteUrl;
 
   const routes = [
@@ -28,9 +29,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  // In a real application with a connected database, we would also fetch
-  // product categories and products here to generate dynamic sitemap entries.
-  // For Phase 2 (static frontend), we include the core routes.
+  // Main product categories (Mining, Agricultural, Industrial) — each of
+  // these pages also lists every subcategory inline, so subcategories
+  // don't need their own sitemap entries.
+  const categories = await getCategories();
+  const categoryRoutes = categories
+    .filter((c) => !c.parent_id)
+    .map((category) => ({
+      url: `${baseUrl}/products/${category.slug}`,
+      lastModified: new Date().toISOString(),
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    }));
 
-  return [...routes, ...serviceRoutes];
+  // Every individual product detail page.
+  const productPaths = await getAllProductPaths();
+  const productRoutes = productPaths.map(({ category, slug }) => ({
+    url: `${baseUrl}/products/${category}/${slug}`,
+    lastModified: new Date().toISOString(),
+    changeFrequency: "weekly" as const,
+    priority: 0.6,
+  }));
+
+  return [...routes, ...serviceRoutes, ...categoryRoutes, ...productRoutes];
 }
