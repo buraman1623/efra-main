@@ -46,7 +46,7 @@ export function UserRoleControl({
   }
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 w-fit">
       <div className="inline-flex items-center rounded-full border border-glass-border bg-white/5 p-0.5 text-xs font-medium">
         <button
           type="button"

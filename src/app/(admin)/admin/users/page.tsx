@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { formatAdminDate } from "@/lib/admin/format";
 import { UserRoleControl } from "@/components/admin/UserRoleControl";
+import { TelegramSettingsButton } from "@/components/admin/TelegramSettingsButton";
 
 interface ProfileRow {
   id: string;
@@ -10,6 +11,8 @@ interface ProfileRow {
   full_name: string | null;
   role: "user" | "admin";
   avatar_url: string | null;
+  telegram_chat_id: string | null;
+  telegram_notifications_enabled: boolean;
   created_at: string;
 }
 
@@ -25,7 +28,9 @@ export default async function AdminUsersPage() {
 
   const { data, error } = await supabase
     .from("profiles")
-    .select("id, email, full_name, role, avatar_url, created_at")
+    .select(
+      "id, email, full_name, role, avatar_url, telegram_chat_id, telegram_notifications_enabled, created_at"
+    )
     .order("created_at", { ascending: false });
 
   const users = (data as ProfileRow[]) || [];
@@ -49,7 +54,8 @@ export default async function AdminUsersPage() {
           </h1>
           <p className="mt-1 text-sm text-brand-muted">
             Everyone who has signed in to the site. Grant or remove admin
-            access here — all other fields are read-only.
+            access, and configure each admin&apos;s Telegram notifications,
+            here — all other fields are read-only.
           </p>
         </div>
 
@@ -98,6 +104,9 @@ export default async function AdminUsersPage() {
                 <th className="px-6 py-3.5 text-xs font-semibold text-brand-muted uppercase tracking-wider">
                   Role
                 </th>
+                <th className="px-6 py-3.5 text-xs font-semibold text-brand-muted uppercase tracking-wider">
+                  Notifications
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-glass-border text-sm">
@@ -135,12 +144,24 @@ export default async function AdminUsersPage() {
                       isSelf={profile.id === user.id}
                     />
                   </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <TelegramSettingsButton
+                      userId={profile.id}
+                      initialChatId={profile.telegram_chat_id}
+                      initialEnabled={profile.telegram_notifications_enabled}
+                      displayName={
+                        profile.id === user.id
+                          ? "you"
+                          : profile.full_name || profile.email
+                      }
+                    />
+                  </td>
                 </tr>
               ))}
 
               {users.length === 0 && !error && (
                 <tr>
-                  <td colSpan={4} className="px-6 py-16 text-center">
+                  <td colSpan={5} className="px-6 py-16 text-center">
                     <div className="flex flex-col items-center justify-center gap-3">
                       <div className="w-12 h-12 rounded-full bg-white/5 border border-glass-border flex items-center justify-center">
                         <svg className="w-6 h-6 text-brand-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">
