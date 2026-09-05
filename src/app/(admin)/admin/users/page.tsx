@@ -33,7 +33,7 @@ export default async function AdminUsersPage() {
     )
     .order("created_at", { ascending: false });
 
-  const users = (data as ProfileRow[]) || [];
+  const users = (data as unknown as ProfileRow[]) || [];
   const totalUsers = users.length;
   const adminCount = users.filter((u) => u.role === "admin").length;
 
