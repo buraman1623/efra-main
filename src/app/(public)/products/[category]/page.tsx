@@ -29,12 +29,13 @@ export default async function CategoryPage({ params }: Props) {
     notFound();
   }
 
-  const { category, products } = result;
+  const { category, products, subcategories } = result;
 
   return (
     <CategoryPageClient
       category={category}
       products={products}
+      subcategories={subcategories}
       categorySlug={p.category}
     />
   );
